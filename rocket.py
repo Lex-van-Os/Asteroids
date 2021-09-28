@@ -14,8 +14,9 @@ crashed = False
 img = pygame.image.load('sprites/New_Piskel_1.png')
 img = pygame.transform.scale(img, (60,60))
 
-def rocket(x,y):
-    window.blit(img, (x,y))
+def rocket(x,y,angle):
+    imgCopy = pygame.transform.rotate(img, angle)
+    window.blit(imgCopy, (x - int(imgCopy.get_width() / 2 ), y - int(imgCopy.get_height() / 2)))
 
 x =  (display_width - (display_width / 2))
 y = (display_height - (display_height / 2))
@@ -28,10 +29,16 @@ while not crashed:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_UP]:
-        y -= 0.1
+        y -= 0.2
+    if keys[pygame.K_DOWN]:
+        y += 0.2
+    if keys[pygame.K_RIGHT]:
+        angle -= 0.2
+    if keys[pygame.K_LEFT]:
+        angle += 0.2
 
     window.fill(0)
-    rocket(x,y)
+    rocket(x,y,angle)
         
     pygame.display.update()
 
