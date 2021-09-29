@@ -18,8 +18,11 @@ def rocket(x,y,angle):
     imgCopy = pygame.transform.rotate(img, angle)
     window.blit(imgCopy, (x - int(imgCopy.get_width() / 2 ), y - int(imgCopy.get_height() / 2)))
 
+
 x =  (display_width - (display_width / 2))
 y = (display_height - (display_height / 2))
+
+acceleration = 0.25
 
 while not crashed:
     for event in pygame.event.get():
@@ -29,13 +32,13 @@ while not crashed:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_UP]:
-        y -= 0.2
-    if keys[pygame.K_DOWN]:
-        y += 0.2
+        y -= acceleration
+    # if keys[pygame.K_DOWN]:
+    #     y += 0.2
     if keys[pygame.K_RIGHT]:
-        angle -= 0.2
+        angle -= acceleration
     if keys[pygame.K_LEFT]:
-        angle += 0.2
+        angle += acceleration
 
     window.fill(0)
     rocket(x,y,angle)
