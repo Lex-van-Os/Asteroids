@@ -1,8 +1,10 @@
 import math
 import pygame
 
-width, height = 700, 600
+width, height = 1280, 720
+win = pygame.display.set_mode((width,height))
 
+# Rocket image
 playerRocket = pygame.image.load('assets/rocket.png')
 playerRocket = pygame.transform.scale(playerRocket, (60,60))
 
@@ -10,7 +12,7 @@ SPEED = 4
 
 # Player class
 class Rocket(object):
-    
+    # Set the variables
     def __init__(self):
         self.img = playerRocket
         self.w = self.img.get_width()
@@ -26,9 +28,11 @@ class Rocket(object):
         self.sine = math.sin(math.radians(self.angle + 90))
         self.head = (self.x + self.cosine * self.w//2, self.y - self.sine * self.h//2)
 
+    # Draw the rocket on screen
     def draw(self, win):
         win.blit(self.rotation, self.rotationRect)
 
+    # Calculate the rotation of the rocket
     def calculateRotation(self):
         self.rotation = pygame.transform.rotate(self.img, self.angle) # Rotate the rocket
         self.rotationRect = self.rotation.get_rect()
@@ -38,20 +42,41 @@ class Rocket(object):
         self.sine = math.sin(math.radians(self.angle + 90))
         self.head = (self.x + self.cosine * self.w//2, self.y - self.sine * self.h//2)
 
+    # Rotate the rocket to the left
     def turnLeft(self):
         self.angle += 5
         Rocket.calculateRotation(self)
 
+    # Rotate the rocket to the Right
     def turnRight(self):
         self.angle -= 5
         Rocket.calculateRotation(self)
 
+    # Move the rocket to the direction he is facing
     def moveForward(self):
         self.x += self.cosine * SPEED
         self.y -= self.sine * SPEED
         Rocket.calculateRotation(self)
 
+    # Auto move the rocket to the direction he is facing
     def autoMove(self):
         self.x += self.cosine * 1
         self.y -= self.sine * 1
         Rocket.calculateRotation(self)
+
+# Bullet class
+class Bullet(Rocket):
+
+    def __init__(self):
+        Rocket.__init__(self)
+        self.head = self.head
+        self.x, self.y = self.head
+        self.w = 3
+        self.y = 3
+
+    def shoot(self):
+        pass
+
+    def draw(self):
+        pygame.draw.circle(win, (255, 255, 255), [self.x, self.y, self.w, self.y])
+        pass 

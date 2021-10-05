@@ -1,5 +1,5 @@
 import pygame
-from rocket import Rocket
+from rocket import Bullet, Rocket
 from asteroid import asteroid
 
 width, height = 1280, 720
@@ -18,40 +18,47 @@ asteroid_l = pygame.Rect(0, 200, ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT)
 asteroid_m = pygame.Rect(900, 400, ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT)
 asteroid_s = pygame.Rect(300, 0, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT)
 
-def draw(rocket):
-    win.blit(backGround, (0,0))
-    rocket.draw(win)
-    asteroid.draw_window(asteroid_l, asteroid_m, asteroid_s, win)
-    pygame.display.update()
+class main():
 
-def main():
-    rocket = Rocket()
-    clock = pygame.time.Clock()
-    run = True
-    while run:
-        clock.tick(FPS)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
+    def draw(rocket):
+        win.blit(backGround, (0,0))
+        rocket.draw(win)
+        asteroid.draw_window(asteroid_l, asteroid_m, asteroid_s, win)
+        pygame.display.update()
 
-        keys = pygame.key.get_pressed()
+    def main():
+        rocket = Rocket()
+        clock = pygame.time.Clock()
+        run = True
 
-        if keys[pygame.K_UP]:
-            rocket.moveForward()
-        if keys[pygame.K_RIGHT]:
-            rocket.turnRight()
-        if keys[pygame.K_LEFT]:
-            rocket.turnLeft()
+        bullet = []
 
-        asteroid_l.x += 1
-        asteroid_m.x -= 1
-        asteroid_s.y += 1
-        rocket.autoMove()
+        while run:
+            clock.tick(FPS)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
 
-        draw(rocket)
+            keys = pygame.key.get_pressed()
+
+            if keys[pygame.K_UP]:
+                rocket.moveForward()
+            if keys[pygame.K_RIGHT]:
+                rocket.turnRight()
+            if keys[pygame.K_LEFT]:
+                rocket.turnLeft()
+            if keys[pygame.K_SPACE]:
+                bullet.append(Bullet())
+
+            asteroid_l.x += 1
+            asteroid_m.x -= 1
+            asteroid_s.y += 1
+            rocket.autoMove()
+
+            main.draw(rocket)
 
 if __name__ == "__main__":
     pygame.init()
     win = pygame.display.set_mode((width,height))
 
-    main()
+    main.main()
