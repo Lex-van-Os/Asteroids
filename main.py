@@ -1,4 +1,4 @@
-import pygame ,os
+import pygame
 from rocket import Rocket
 from asteroid import asteroid
 from omgeving import score
@@ -8,6 +8,7 @@ pygame.font.init()
 width, height = 700, 600
 
 backGround = pygame.image.load('assets/background.png')
+
 pygame.display.set_caption("First Game!")
 
 FPS = 60
