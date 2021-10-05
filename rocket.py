@@ -1,6 +1,5 @@
 import math
 import pygame
-from pygame.constants import SCRAP_PPM
 
 width, height = 700, 600
 
