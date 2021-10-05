@@ -8,6 +8,7 @@ playerRocket = pygame.transform.scale(playerRocket, (60,60))
 
 # Player class
 class Rocket(object):
+    
     def __init__(self):
         self.img = playerRocket
         self.w = self.img.get_width()
