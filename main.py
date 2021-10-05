@@ -23,9 +23,6 @@ asteroid_l = pygame.Rect(0, 200, ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT)
 asteroid_m = pygame.Rect(900, 400, ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT)
 asteroid_s = pygame.Rect(300, 0, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT)
 
-# border
-BORDER = pygame.Rect(width//2 - 5, 0, 10, height)
-
 def draw(rocket, score):
     win.blit(backGround, (0,0))
     rocket.draw(win)
