@@ -3,8 +3,8 @@ import pygame
 
 width, height = 700, 600
 
-playerRocket = pygame.image.load('assets/rocket.png')
-playerRocket = pygame.transform.scale(playerRocket, (60,60))
+playerRocket = pygame.image.load('assets/space_ship.png')
+playerRocket = pygame.transform.scale(playerRocket, (40,70))
 
 # Player class
 class Rocket(object):

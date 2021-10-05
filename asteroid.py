@@ -3,9 +3,9 @@ import pygame, os
 ASTEROID_LARGE_IMG = pygame.image.load(os.path.join('assets/', 'asteroid_large.png'))
 ASTEROID_MEDIUM_IMG = pygame.image.load(os.path.join('assets/', 'asteroid_medium.png'))
 ASTEROID_SMALL_IMG = pygame.image.load(os.path.join('assets/', 'asteroid_small.png'))
-ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 50, 50
-ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 35, 35
-ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 20, 20
+ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 75, 75
+ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 50, 50
+ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 40, 40
 ASTEROID_LARGE = pygame.transform.scale(ASTEROID_LARGE_IMG, (ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT))
 ASTEROID_MEDIUM = pygame.transform.scale(ASTEROID_MEDIUM_IMG, (ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT))
 ASTEROID_SMALL = pygame.transform.scale(ASTEROID_SMALL_IMG, (ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT))
