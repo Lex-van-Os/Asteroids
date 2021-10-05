@@ -2,9 +2,10 @@ import pygame
 from rocket import Rocket
 from asteroid import asteroid
 
-width, height = 700, 600
+width, height = 1280, 720
 
 backGround = pygame.image.load('assets/background.png')
+backGround = pygame.transform.scale(backGround, (1280, 720))
 
 FPS = 60
 
@@ -45,6 +46,7 @@ def main():
         asteroid_l.x += 1
         asteroid_m.x -= 1
         asteroid_s.y += 1
+        rocket.autoMove()
 
         draw(rocket)
 
