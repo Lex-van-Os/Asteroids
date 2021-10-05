@@ -4,24 +4,26 @@ from asteroid import asteroid
 
 width, height = 700, 600
 
-backGround = pygame.image.load('sprites/background.png')
+backGround = pygame.image.load('assets/background.png')
 
 FPS = 60
+
 ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 50, 50
 ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 35, 35
 ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 20, 20
 
-def draw(rocket, asteroid_l, asteroid_m, asteroid_s):
+# Asteroid rectangles
+asteroid_l = pygame.Rect(0, 200, ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT)
+asteroid_m = pygame.Rect(900, 400, ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT)
+asteroid_s = pygame.Rect(300, 0, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT)
+
+def draw(rocket):
     win.blit(backGround, (0,0))
     rocket.draw(win)
     asteroid.draw_window(asteroid_l, asteroid_m, asteroid_s, win)
     pygame.display.update()
 
 def main():
-    asteroid_l = pygame.Rect(0, 200, ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT)
-    asteroid_m = pygame.Rect(900, 400, ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT)
-    asteroid_s = pygame.Rect(300, 0, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT)
-
     rocket = Rocket()
     clock = pygame.time.Clock()
     run = True
@@ -44,7 +46,7 @@ def main():
         asteroid_m.x -= 1
         asteroid_s.y += 1
 
-        draw(rocket, asteroid_l, asteroid_m, asteroid_s)
+        draw(rocket)
 
 if __name__ == "__main__":
     pygame.init()
