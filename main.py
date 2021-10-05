@@ -1,7 +1,6 @@
 import pygame
 from rocket import Rocket
 from asteroid import asteroid
-from omgeving import score
 
 pygame.font.init()
 
@@ -29,9 +28,11 @@ def draw(rocket, score):
     win.blit(backGround, (0,0))
     rocket.draw(win)
     score_text = SCORE_FONT.render("score: " + str(score), 1, (255, 255, 0))
-    win.blit(score_text, (width - score_text.get_width() - 10, 10))
+    win.blit(score_text, (width  - score_text.get_width() - 10, 10))
     asteroid.draw_window(asteroid_l, asteroid_m, asteroid_s, win)
     pygame.display.update()
+
+score = 5
 
 def main():
     rocket = Rocket()
@@ -57,7 +58,7 @@ def main():
         asteroid_s.y += 1
         rocket.autoMove()
 
-        draw(rocket)
+        draw(rocket, score)
 
 if __name__ == "__main__":
     pygame.init()
