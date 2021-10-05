@@ -3,7 +3,7 @@ import pygame
 
 width, height = 700, 600
 
-playerRocket = pygame.image.load('sprites/New_Piskel_1.png')
+playerRocket = pygame.image.load('assets/rocket.png')
 playerRocket = pygame.transform.scale(playerRocket, (60,60))
 
 # Player class
