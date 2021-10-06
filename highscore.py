@@ -31,25 +31,3 @@ def draw_main():
             if event.type == pygame.QUIT:
                 run = False
     pygame.quit()
-
-
-
-
-
-
-# Call the blit method to draw image on screen
-screen.blit(HIGHSCORE_IMAGE, (0, 0))
-
-
-
-
-
-"""
-HIGHSCORE_IMAGE = pygame.image.load(os.path.join)('game-programming-challenge-medium-rare-chicken/assets/', 'highscore.png')
-BACKGROUND_COLOR = (0, 0, 0)
-
-def draw_window(HIGHSCORE_IMAGE):
-    WIN.fill(BACKGROUND_COLOR)
-    pygame.display.update()
-    
-"""
