@@ -7,7 +7,7 @@ pygame.display.set_caption("Highscore Screen")
 FPS = 60
 
 # Background image
-HIGHSCORE_IMAGE = pygame.image.load(os.path.join)('game-programming-challenge-medium-rare-chicken/assets/', 'highscore.png')
+HIGHSCORE_IMAGE = pygame.image.load('assets/highscore.png')
 HIGHSCORE_WIDTH, HIGHSCORE_HEIGHT = 900, 500
 
 def draw_window():
@@ -15,9 +15,9 @@ def draw_window():
     run = True
     while run:
         # RGB = Red, Green, Blue
-        screen.fill((0, 0, 0))
+        WIN.fill((0, 0, 0))
         # Load Background Image
-        screen.blit(HIGHSCORE_IMAGE, (0, 0))
+        WIN.blit(HIGHSCORE_IMAGE, (0, 0))
 
         pygame.display.flip()
 
