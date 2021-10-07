@@ -10,19 +10,12 @@ FPS = 60
 HIGHSCORE_IMAGE = pygame.image.load('assets/highscore.png')
 HIGHSCORE_WIDTH, HIGHSCORE_HEIGHT = 900, 500
 
-def draw_window():
-# Game Loop
-    run = True
-    while run:
-        # RGB = Red, Green, Blue
-        WIN.fill((0, 0, 0))
-        # Load Background Image
-        WIN.blit(HIGHSCORE_IMAGE, (0, 0))
-
-        pygame.display.flip()
+def draw_window(HIGHSCORE_IMAGE):
+    WIN.fill((0, 0, 0))
+    WIN.blit(HIGHSCORE_IMAGE, (0, 0))
+    pygame.display.update()
 
 def draw_main():
-
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -30,4 +23,9 @@ def draw_main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+    draw_window(HIGHSCORE_IMAGE)            
     pygame.quit()
+
+if __name__ == "__main__":
+    main()
