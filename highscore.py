@@ -15,7 +15,7 @@ def draw_window(HIGHSCORE_IMAGE):
     WIN.blit(HIGHSCORE_IMAGE, (0, 0))
     pygame.display.update()
 
-def draw_main():
+def main():
     clock = pygame.time.Clock()
     run = True
     while run:
