@@ -64,19 +64,12 @@ class Rocket(object):
         self.y -= self.sine * 1
         Rocket.calculateRotation(self)
 
-# Bullet class
-class Bullet(Rocket):
-
-    def __init__(self):
-        Rocket.__init__(self)
-        self.head = self.head
-        self.x, self.y = self.head
-        self.w = 3
-        self.y = 3
-
-    def shoot(self):
-        pass
-
-    def draw(self):
-        pygame.draw.circle(win, (255, 255, 255), [self.x, self.y, self.w, self.y])
-        pass 
+    def updateLocation(self):
+        if self.x > width + 50:
+            self.x = 0
+        elif self.x < 0 - self.w:
+            self.x = width
+        elif self.y < -50:
+            self.y = height
+        elif self.y > height + 50:
+            self.y = 0
