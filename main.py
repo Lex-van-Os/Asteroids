@@ -8,9 +8,10 @@ from omgeving import close_button
 
 pygame.font.init()
 
-width, height = 700, 600
+width, height = 1280, 720
 
 backGround = pygame.image.load('assets/background.png')
+backGround = pygame.transform.scale(backGround, (1280, 720))
 
 pygame.display.set_caption("First Game!")
 
@@ -72,6 +73,7 @@ def main():
         asteroid_l.x += 1
         asteroid_m.x -= 1
         asteroid_s.y += 1
+        rocket.autoMove()
 
         draw(rocket, score)
 
