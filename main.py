@@ -57,41 +57,48 @@ def draw(rocket):
     
     pygame.display.update()
 
-
 rocket = Rocket()
 bullets = []
-count = 0
-clock = pygame.time.Clock()
-run = True
 
-while run:
-    clock.tick(FPS)
-    count += 1
+def main():
+    count = 0
+    clock = pygame.time.Clock()
+    run = True
 
-    rocket.updateLocation()
-    for b in bullets:
-        b.move()
-        if b.checkOffScreen():
-            bullets.pop(bullets.index(b))
+    while run:
+        clock.tick(FPS)
+        count += 1
 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP]:
-        rocket.moveForward()
-    if keys[pygame.K_RIGHT]:
-        rocket.turnRight()
-    if keys[pygame.K_LEFT]:
-        rocket.turnLeft()
+        rocket.updateLocation()
+        for b in bullets:
+            b.move()
+            if b.checkOffScreen():
+                bullets.pop(bullets.index(b))
 
-    asteroid_l.x += 1
-    asteroid_m.x -= 1
-    asteroid_s.y += 1
-    rocket.autoMove()
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            rocket.moveForward()
+        if keys[pygame.K_RIGHT]:
+            rocket.turnRight()
+        if keys[pygame.K_LEFT]:
+            rocket.turnLeft()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                bullets.append(Bullet())
+        asteroid_l.x += 1
+        asteroid_m.x -= 1
+        asteroid_s.y += 1
+        rocket.autoMove()
 
-    draw(rocket)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    bullets.append(Bullet())
+
+        draw(rocket)
+
+if __name__ == "__main__":
+    pygame.init()
+    win = pygame.display.set_mode((width,height))
+
+    main()

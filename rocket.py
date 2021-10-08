@@ -64,6 +64,7 @@ class Rocket(object):
         self.y -= self.sine * 1
         Rocket.calculateRotation(self)
 
+    # Track the location of the player / not offscreen
     def updateLocation(self):
         if self.x > width + 50:
             self.x = 0
