@@ -1,27 +1,32 @@
-import pygame
+import pygame, threading
 from rocket import Rocket
-from asteroid import asteroid
+from asteroid import Asteroid
+from environment import Environment
+from asteroid_manager import AsteroidManager
 
-width, height = 700, 600
+# Environment for pre-defined width and height
+environment = Environment()
+asteroid_manager = AsteroidManager()
 
 backGround = pygame.image.load('assets/background.png')
 
 FPS = 60
-
 ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 50, 50
 ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 35, 35
 ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 20, 20
 
-# Asteroid rectangles
-asteroid_l = pygame.Rect(0, 200, ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT)
-asteroid_m = pygame.Rect(900, 400, ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT)
-asteroid_s = pygame.Rect(300, 0, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT)
+# Define asteroids list for storing newly created asteroids
+asteroids = []
 
-def draw(rocket):
+
+def draw(rocket, asteroids):
+    # Lijst van asteroides wordt meegegeven, waardoorheen geloopt wordt, om ze allemaal te laten bewegen
     win.blit(backGround, (0,0))
     rocket.draw(win)
-    asteroid.draw_window(asteroid_l, asteroid_m, asteroid_s, win)
+    for asteroid in asteroids:
+        asteroid.draw_asteroid(win)
     pygame.display.update()
+
 
 def main():
     rocket = Rocket()
@@ -42,14 +47,17 @@ def main():
         if keys[pygame.K_LEFT]:
             rocket.turnLeft()
 
-        asteroid_l.x += 1
-        asteroid_m.x -= 1
-        asteroid_s.y += 1
+        # Ervoor zorgen dat er niet meer dan een aantal astroides worden ingeladen
+        if asteroid_manager.asteroids_count <= 15:
+            print("Creating asteroid")
+            asteroids.append(asteroid_manager.create_asteroid())
 
-        draw(rocket)
+        draw(rocket, asteroids)
+
 
 if __name__ == "__main__":
     pygame.init()
-    win = pygame.display.set_mode((width,height))
+    # Set window width and height based on pre-defined environment width and heights, that can be changed
+    win = pygame.display.set_mode((environment.environment_width, environment.environment_height))
 
     main()
