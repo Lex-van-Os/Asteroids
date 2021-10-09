@@ -3,8 +3,10 @@ import pygame
 
 width, height = 700, 600
 
-playerRocket = pygame.image.load('assets/rocket.png')
-playerRocket = pygame.transform.scale(playerRocket, (60,60))
+playerRocket = pygame.image.load('assets/space_ship.png')
+playerRocket = pygame.transform.scale(playerRocket, (40,70))
+
+SPEED = 4
 
 # Player class
 class Rocket(object):
@@ -27,8 +29,7 @@ class Rocket(object):
     def draw(self, win):
         win.blit(self.rotation, self.rotationRect)
 
-    def turnLeft(self):
-        self.angle += 5
+    def calculateRotation(self):
         self.rotation = pygame.transform.rotate(self.img, self.angle) # Rotate the rocket
         self.rotationRect = self.rotation.get_rect()
         self.rotationRect.center = (self.x, self.y) # Set the rocket to the center of the screen
@@ -36,24 +37,21 @@ class Rocket(object):
         self.cosine = math.cos(math.radians(self.angle + 90))
         self.sine = math.sin(math.radians(self.angle + 90))
         self.head = (self.x + self.cosine * self.w//2, self.y - self.sine * self.h//2)
+
+    def turnLeft(self):
+        self.angle += 5
+        Rocket.calculateRotation(self)
 
     def turnRight(self):
         self.angle -= 5
-        self.rotation = pygame.transform.rotate(self.img, self.angle) # Rotate the rocket
-        self.rotationRect = self.rotation.get_rect()
-        self.rotationRect.center = (self.x, self.y) # Set the rocket to the center of the screen
-        # Calculate with direction the rocket is facing
-        self.cosine = math.cos(math.radians(self.angle + 90))
-        self.sine = math.sin(math.radians(self.angle + 90))
-        self.head = (self.x + self.cosine * self.w//2, self.y - self.sine * self.h//2)
+        Rocket.calculateRotation(self)
 
     def moveForward(self):
-        self.x += self.cosine * 6
-        self.y -= self.sine * 6
-        self.rotation = pygame.transform.rotate(self.img, self.angle) # Rotate the rocket
-        self.rotationRect = self.rotation.get_rect()
-        self.rotationRect.center = (self.x, self.y) # Set the rocket to the center of the screen
-        # Calculate with direction the rocket is facing
-        self.cosine = math.cos(math.radians(self.angle + 90))
-        self.sine = math.sin(math.radians(self.angle + 90))
-        self.head = (self.x + self.cosine * self.w//2, self.y - self.sine * self.h//2)
+        self.x += self.cosine * SPEED
+        self.y -= self.sine * SPEED
+        Rocket.calculateRotation(self)
+
+    def autoMove(self):
+        self.x += self.cosine * 1
+        self.y -= self.sine * 1
+        Rocket.calculateRotation(self)
