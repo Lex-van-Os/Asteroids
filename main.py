@@ -1,15 +1,19 @@
-import pygame
+import pygame, threading
 from rocket import Rocket
-from asteroid import asteroid
+from asteroid import Asteroid
+from environment import Environment
+from asteroid_manager import AsteroidManager
 from omgeving import highscore_button
 from omgeving import retry_button
 from omgeving import close_button
 
+# Environment for pre-defined width and height
+environment = Environment()
+asteroid_manager = AsteroidManager()
 
 pygame.font.init()
 
 width, height = 1280, 720
-
 backGround = pygame.image.load('assets/background.png')
 backGround = pygame.transform.scale(backGround, (1280, 720))
 
@@ -25,15 +29,17 @@ ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 50, 50
 ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 35, 35
 ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 20, 20
 
-# Asteroid rectangles
-asteroid_l = pygame.Rect(0, 200, ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT)
-asteroid_m = pygame.Rect(900, 400, ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT)
-asteroid_s = pygame.Rect(300, 0, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT)
+# Define asteroids list for storing newly created asteroids
+asteroids = []
 
-def draw(rocket, score):
+
+def draw(rocket, asteroids, score):
+    # Lijst van asteroides wordt meegegeven, waardoorheen geloopt wordt, om ze allemaal te laten bewegen
     win.blit(backGround, (0,0))
     rocket.draw(win)
-    asteroid.draw_window(asteroid_l, asteroid_m, asteroid_s, win)
+    for asteroid in asteroids:
+        asteroid.draw_asteroid(win)
+       
     if hp >= 1:
         score_text = SCORE_FONT.render("score: " + str(score), 1, (255, 255, 0))
         win.blit(score_text, (width  - score_text.get_width() - 10, 10))
@@ -45,7 +51,7 @@ def draw(rocket, score):
         win.blit(highscore_button, ( 200 , 250))
         win.blit(retry_button, ( 200 , 200))
         win.blit(close_button, ( 200 , 300))
-
+        
     pygame.display.update()
 
 score = 5
@@ -70,15 +76,18 @@ def main():
         if keys[pygame.K_LEFT]:
             rocket.turnLeft()
 
-        asteroid_l.x += 1
-        asteroid_m.x -= 1
-        asteroid_s.y += 1
-        rocket.autoMove()
+        # Ervoor zorgen dat er niet meer dan een aantal astroides worden ingeladen
+        if asteroid_manager.asteroids_count <= 15:
+            print("Creating asteroid")
+            asteroids.append(asteroid_manager.create_asteroid())
 
-        draw(rocket, score)
+        rocket.autoMove()
+        draw(rocket, asteroids, score)
+
 
 if __name__ == "__main__":
     pygame.init()
-    win = pygame.display.set_mode((width,height))
+    # Set window width and height based on pre-defined environment width and heights, that can be changed
+    win = pygame.display.set_mode((environment.environment_width, environment.environment_height))
 
     main()
