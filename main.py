@@ -59,6 +59,7 @@ def draw(rocket):
 
 rocket = Rocket()
 bullets = []
+gameover = False
 
 def main():
     count = 0
@@ -68,34 +69,38 @@ def main():
     while run:
         clock.tick(FPS)
         count += 1
+        if not gameover:
+            rocket.updateLocation()
+            for b in bullets:
+                b.move()
+                if b.checkOffScreen():
+                    bullets.pop(bullets.index(b))
 
-        rocket.updateLocation()
-        for b in bullets:
-            b.move()
-            if b.checkOffScreen():
-                bullets.pop(bullets.index(b))
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_UP]:
+                rocket.moveForward()
+            if keys[pygame.K_RIGHT]:
+                rocket.turnRight()
+            if keys[pygame.K_LEFT]:
+                rocket.turnLeft()
 
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
-            rocket.moveForward()
-        if keys[pygame.K_RIGHT]:
-            rocket.turnRight()
-        if keys[pygame.K_LEFT]:
-            rocket.turnLeft()
+            asteroid_l.x += 1
+            asteroid_m.x -= 1
+            asteroid_s.y += 1
+            rocket.autoMove()
 
-        asteroid_l.x += 1
-        asteroid_m.x -= 1
-        asteroid_s.y += 1
-        rocket.autoMove()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        if not gameover:
+                            bullets.append(Bullet())
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    bullets.append(Bullet())
-
-        draw(rocket)
+            draw(rocket)
+        else:
+            # Clear all draw items and toggle game over
+            pass
 
 if __name__ == "__main__":
     pygame.init()
