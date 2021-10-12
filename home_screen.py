@@ -4,6 +4,7 @@ import webbrowser
 from pygame import mixer
 import time
 import subprocess
+import game
 
 # Start game en icon aanmaken voor de applicatie plus een caption
 pygame.init()
@@ -141,8 +142,8 @@ qulianLink = Button(
     screen.get_width() / 25, start.get_rect().height / 0.178, qulian_linkedin_page
 )
 # Create Background sound
-# mixer.music.load(os.path.join("assets", "chris.mp3"))
-# mixer.music.play(-1)
+mixer.music.load(os.path.join("assets", "chris.mp3"))
+mixer.music.play(-1)
 
 
 def main():
@@ -171,6 +172,7 @@ def main():
             print("testqulian")
         if start_button.draw():
             print("start clicked")
+            game.main()
         if highscore_button.draw():
             print("high score clicked")
         if quit_button.draw():
