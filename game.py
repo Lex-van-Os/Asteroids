@@ -12,6 +12,7 @@ from omgeving import retry_width
 from omgeving import retry_length
 from omgeving import close_width 
 from omgeving import close_length
+from rocket import playerRocket
 
 from pygame import mixer
 import os
@@ -100,6 +101,7 @@ def draw(rocket, score, hp):
         win.blit(retry_button, ( width / 2 - retry_width / 2 , 300))
         win.blit(close_button, ( width / 2 - close_width / 2 , 500))
         
+    
         mouse = pygame.mouse.get_pos()
         #print(click)
         #print(mouse) 
@@ -121,7 +123,9 @@ def draw(rocket, score, hp):
                 #print("retry")
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     print("retry pressed")
+                    playerRocket.set_alpha(1000)
                     main()
+                
 
                     
             else:
