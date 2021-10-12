@@ -107,3 +107,12 @@ class Asteroid(pygame.Rect):
     # def rotate_asteroid(self):
     #     self.asteroid_image = pygame.transform.rotate(self.asteroid_image, self.rotation)
     #     self.asteroid_image = self.asteroid_image.get_rect(center = image.get_rect(topleft = topleft).center)
+
+
+    def check_position(self):
+        environment = Environment()
+        # rect = pygame.Rect(self.x_coords, self.y_coords, self.asteroid_width, self.asteroid_height)
+        if self.x < -50 or self.x > environment.out_of_bounds_width or self.y > environment.out_of_bounds_height or self.y < -50:
+            return True
+        else:
+            return False

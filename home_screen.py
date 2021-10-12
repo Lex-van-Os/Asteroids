@@ -142,8 +142,8 @@ qulianLink = Button(
     screen.get_width() / 25, start.get_rect().height / 0.178, qulian_linkedin_page
 )
 # Create Background sound
-# mixer.music.load(os.path.join("assets", "chris.mp3"))
-# mixer.music.play(-1)
+mixer.music.load(os.path.join("assets", "chris.mp3"))
+mixer.music.play(-1)
 
 
 def main():

@@ -6,6 +6,13 @@ from asteroid_manager import AsteroidManager
 from omgeving import highscore_button
 from omgeving import retry_button
 from omgeving import close_button
+from omgeving import highscore_width
+from omgeving import highscore_length
+from omgeving import retry_width
+from omgeving import retry_length
+from omgeving import close_width 
+from omgeving import close_length
+
 from pygame import mixer
 import os
 
@@ -22,7 +29,7 @@ pygame.font.init()
 width, height = 1280, 720
 backGround = pygame.image.load(os.path.join('assets', 'background.png'))
 backGround = pygame.transform.scale(backGround, (1280, 720))
-shoot = pygame.mixer.Sound(os.path.join('assets', 'Gun+Silencer.mp3'))
+shoot = pygame.mixer.Sound(f'.\\' + os.path.join('assets', 'Gun+Silencer.mp3'))
 # shoot = pygame.mixer.Sound(os.path.join('assets', 'hanghang69.mp3'))
 
 pygame.display.set_caption('Asteroids')
@@ -37,9 +44,6 @@ GAME_OVER = pygame.font.SysFont("comicsans" , 100)
 ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 50, 50
 ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 35, 35
 ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 20, 20
-
-# Define asteroids list for storing newly created asteroids
-asteroids = []
 
 # Bullet class
 class Bullet(object):
@@ -67,13 +71,18 @@ class Bullet(object):
 
 rocket = Rocket()
 bullets = []
+# Define asteroids list for storing newly created asteroids
+asteroids = []
 
-def draw(rocket, asteroids, score, hp):
+def draw(rocket, score, hp):
     # Lijst van asteroides wordt meegegeven, waardoorheen geloopt wordt, om ze allemaal te laten bewegen
     win.blit(backGround, (0,0))
     rocket.draw(win)
     for asteroid in asteroids:
         asteroid.draw_asteroid(win)
+        if asteroid.check_position():
+            asteroids.pop(asteroids.index(asteroid))
+            asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
     for b in bullets:
         b.draw(win)
        
@@ -84,21 +93,53 @@ def draw(rocket, asteroids, score, hp):
         win.blit(hp_text, (width  - score_text.get_width() - 100, 10))
     elif hp <= 0:
         score_text = SCORE_FONT_ELSE.render("score: " + str(score), 1, (255, 255, 0))
-        win.blit(score_text, (width - 450 , 150))
+        win.blit(score_text, (width / 2 - 75 , 200))
         game_over_text = GAME_OVER.render("game over", 1, (255, 0 , 0))
-        win.blit(game_over_text, (width - 530 , 75))
-        win.blit(highscore_button, ( 200 , 250))
-        win.blit(retry_button, ( 200 , 200))
-        win.blit(close_button, ( 200 , 300))
+        win.blit(game_over_text, (width / 2 - 200 , 75))
+        win.blit(highscore_button, ( width / 2 - highscore_width / 2 , 400))
+        win.blit(retry_button, ( width / 2 - retry_width / 2 , 300))
+        win.blit(close_button, ( width / 2 - close_width / 2 , 500))
         
+    
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        #print(click)
+        #print(mouse) 
+        #highscore button trigger cords: 520 to 760 and 400 to 475
+        if 520 + highscore_width > mouse[0] > 520 and 400 + highscore_length > mouse[1] >400:
+            highscore_button.set_alpha(50)
+            print("highscore")
+            
+        else:
+            highscore_button.set_alpha(1000)
+        
+        #retry button trigger cords: 520 to 760 and 300 to 375
+        if 520 + retry_width > mouse[0] > 520 and 300 + retry_length > mouse[1] > 300:
+            retry_button.set_alpha(50)
+            print("retry")
+        else:
+            retry_button.set_alpha(1000)
+        
+        #close button trigger cords: 520 to 760 and 500 to 575
+        if 520 + close_width > mouse[0] > 520 and 500 + close_length > mouse[1] > 500:
+            close_button.set_alpha(50)
+            print("close")
+        else:
+            close_button.set_alpha(1000)
+
     pygame.display.update()
 
 def main():
+
     hp = 3
     score = 0
     count = 0
     clock = pygame.time.Clock()
     run = True
+    # Added commented music logic to be turned on on specific occassions :) 
+    # mixer.music.load(os.path.join('', 'on_on.mp3'))
+    # mixer.music.play()
+    # mixer.music.set_volume(0.5)
 
     while run:
         clock.tick(FPS)
@@ -129,6 +170,7 @@ def main():
                         if (b.y >= a.y and b.y <= a.y + a.h) or b.y + b.h >= a.y and b.y + b.h <= a.y + a.h:
                             # Delete the astroid
                             asteroids.pop(asteroids.index(a))
+                            asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
                             # Score plus 1
                             score += 1
 
@@ -152,10 +194,9 @@ def main():
                         bullets.append(Bullet())
 
         if asteroid_manager.asteroids_count <= 15:
-            # print("Creating asteroid")
             asteroids.append(asteroid_manager.create_asteroid())
 
-        draw(rocket, asteroids, score, hp)
+        draw(rocket, score, hp)
 
 if __name__ == "__main__":
     pygame.init()
