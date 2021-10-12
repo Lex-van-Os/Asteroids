@@ -1,5 +1,5 @@
 from asteroid import Asteroid
-from random import choice, random, randrange, uniform
+from random import choice, randrange
 import pygame, os
 
 ASTEROID_LARGE_IMG = pygame.image.load(os.path.join('assets/', 'asteroid_large.png'))
