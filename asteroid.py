@@ -85,8 +85,6 @@ class Asteroid(pygame.Rect):
     def move_asteroid(self):
         self.move_asteroid_x()
         self.move_asteroid_y()
-        print(self.x)
-        print(self.y)
 
 
     # Liggend aan waar de asteroide vandaan komt, wordt er de asteroide snelheid toegevoegd of afgetrokken van de x waarde (allebei int)
