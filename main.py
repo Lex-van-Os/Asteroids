@@ -85,7 +85,7 @@ def draw(rocket, score):
 
 
 score = 5
-hp = 0
+hp = 3
 
 def main():
     rocket = Rocket()
