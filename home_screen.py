@@ -4,6 +4,7 @@ import webbrowser
 from pygame import mixer
 import time
 import subprocess
+import game
 
 # Start game en icon aanmaken voor de applicatie plus een caption
 pygame.init()
@@ -171,6 +172,7 @@ def main():
             print("testqulian")
         if start_button.draw():
             print("start clicked")
+            game.main()
         if highscore_button.draw():
             print("high score clicked")
         if quit_button.draw():
