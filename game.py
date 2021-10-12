@@ -6,6 +6,13 @@ from asteroid_manager import AsteroidManager
 from omgeving import highscore_button
 from omgeving import retry_button
 from omgeving import close_button
+from omgeving import highscore_width
+from omgeving import highscore_length
+from omgeving import retry_width
+from omgeving import retry_length
+from omgeving import close_width 
+from omgeving import close_length
+
 from pygame import mixer
 import os
 
@@ -22,7 +29,7 @@ pygame.font.init()
 width, height = 1280, 720
 backGround = pygame.image.load(os.path.join('assets', 'background.png'))
 backGround = pygame.transform.scale(backGround, (1280, 720))
-shoot = pygame.mixer.Sound(os.path.join('assets', 'Gun+Silencer.mp3'))
+shoot = pygame.mixer.Sound(f'.\\' + os.path.join('assets', 'Gun+Silencer.mp3'))
 # shoot = pygame.mixer.Sound(os.path.join('assets', 'hanghang69.mp3'))
 
 pygame.display.set_caption('Asteroids')
@@ -86,13 +93,40 @@ def draw(rocket, score, hp):
         win.blit(hp_text, (width  - score_text.get_width() - 100, 10))
     elif hp <= 0:
         score_text = SCORE_FONT_ELSE.render("score: " + str(score), 1, (255, 255, 0))
-        win.blit(score_text, (width - 450 , 150))
+        win.blit(score_text, (width / 2 - 75 , 200))
         game_over_text = GAME_OVER.render("game over", 1, (255, 0 , 0))
-        win.blit(game_over_text, (width - 530 , 75))
-        win.blit(highscore_button, ( 200 , 250))
-        win.blit(retry_button, ( 200 , 200))
-        win.blit(close_button, ( 200 , 300))
+        win.blit(game_over_text, (width / 2 - 200 , 75))
+        win.blit(highscore_button, ( width / 2 - highscore_width / 2 , 400))
+        win.blit(retry_button, ( width / 2 - retry_width / 2 , 300))
+        win.blit(close_button, ( width / 2 - close_width / 2 , 500))
         
+    
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        #print(click)
+        #print(mouse) 
+        #highscore button trigger cords: 520 to 760 and 400 to 475
+        if 520 + highscore_width > mouse[0] > 520 and 400 + highscore_length > mouse[1] >400:
+            highscore_button.set_alpha(50)
+            print("highscore")
+            
+        else:
+            highscore_button.set_alpha(1000)
+        
+        #retry button trigger cords: 520 to 760 and 300 to 375
+        if 520 + retry_width > mouse[0] > 520 and 300 + retry_length > mouse[1] > 300:
+            retry_button.set_alpha(50)
+            print("retry")
+        else:
+            retry_button.set_alpha(1000)
+        
+        #close button trigger cords: 520 to 760 and 500 to 575
+        if 520 + close_width > mouse[0] > 520 and 500 + close_length > mouse[1] > 500:
+            close_button.set_alpha(50)
+            print("close")
+        else:
+            close_button.set_alpha(1000)
+
     pygame.display.update()
 
 def main():
