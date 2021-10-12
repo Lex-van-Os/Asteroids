@@ -20,9 +20,10 @@ asteroid_manager = AsteroidManager()
 pygame.font.init()
 
 width, height = 1280, 720
-backGround = pygame.image.load('assets/background.png')
+backGround = pygame.image.load(os.path.join('assets', 'background.png'))
 backGround = pygame.transform.scale(backGround, (1280, 720))
-shoot = pygame.mixer.Sound('assets/Gun+Silencer.mp3')
+shoot = pygame.mixer.Sound(os.path.join('assets', 'Gun+Silencer.mp3'))
+# shoot = pygame.mixer.Sound(os.path.join('assets', 'hanghang69.mp3'))
 
 pygame.display.set_caption('Asteroids')
 win = pygame.display.set_mode((width,height))
@@ -91,7 +92,7 @@ def draw(rocket, asteroids, score):
     pygame.display.update()
 
 score = 5
-hp = 2
+hp = 1
 
 def main():
     count = 0
