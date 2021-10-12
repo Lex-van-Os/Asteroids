@@ -74,7 +74,6 @@ def draw(rocket):
 
 rocket = Rocket()
 bullets = []
-gameover = False
 
 def draw(rocket, asteroids, score):
     # Lijst van asteroides wordt meegegeven, waardoorheen geloopt wordt, om ze allemaal te laten bewegen
@@ -108,6 +107,7 @@ def main():
     while run:
         clock.tick(FPS)
         count += 1
+<<<<<<< HEAD
         if not gameover:
             rocket.updateLocation()
             for b in bullets:
@@ -148,6 +148,36 @@ def main():
 
         rocket.autoMove()
         draw(rocket, asteroids, score)
+=======
+
+        rocket.updateLocation()
+        for b in bullets:
+            b.move()
+            if b.checkOffScreen():
+                bullets.pop(bullets.index(b))
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            rocket.moveForward()
+        if keys[pygame.K_RIGHT]:
+            rocket.turnRight()
+        if keys[pygame.K_LEFT]:
+            rocket.turnLeft()
+
+        asteroid_l.x += 1
+        asteroid_m.x -= 1
+        asteroid_s.y += 1
+        rocket.autoMove()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    bullets.append(Bullet())
+
+        draw(rocket)
+>>>>>>> parent of 925d248 (Game over loop)
 
 if __name__ == "__main__":
     pygame.init()
