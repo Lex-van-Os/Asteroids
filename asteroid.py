@@ -85,6 +85,8 @@ class Asteroid(pygame.Rect):
     def move_asteroid(self):
         self.move_asteroid_x()
         self.move_asteroid_y()
+        print(self.x)
+        print(self.y)
 
 
     # Liggend aan waar de asteroide vandaan komt, wordt er de asteroide snelheid toegevoegd of afgetrokken van de x waarde (allebei int)
@@ -107,3 +109,12 @@ class Asteroid(pygame.Rect):
     # def rotate_asteroid(self):
     #     self.asteroid_image = pygame.transform.rotate(self.asteroid_image, self.rotation)
     #     self.asteroid_image = self.asteroid_image.get_rect(center = image.get_rect(topleft = topleft).center)
+
+
+    def check_position(self):
+        environment = Environment()
+        # rect = pygame.Rect(self.x_coords, self.y_coords, self.asteroid_width, self.asteroid_height)
+        if self.x < -50 or self.x > environment.out_of_bounds_width or self.y > environment.out_of_bounds_height or self.y < -50:
+            return True
+        else:
+            return False

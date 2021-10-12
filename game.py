@@ -18,6 +18,7 @@ backGround = pygame.image.load('assets/background.png')
 backGround = pygame.transform.scale(backGround, (1280, 720))
 rocket = Rocket()
 bullets = []
+asteroids = []
 score = 5
 hp = 2
 
@@ -55,12 +56,15 @@ class Bullet(object):
         if self.x < -50 or self.x > environment.environment_width or self.y > environment.environment_height or self.y < -50:
             return True
 
-def draw(rocket, asteroids, score):
+def draw(rocket, score):
     # Lijst van asteroides wordt meegegeven, waardoorheen geloopt wordt, om ze allemaal te laten bewegen
     win.blit(backGround, (0,0))
     rocket.draw(win)
     for asteroid in asteroids:
         asteroid.draw_asteroid(win)
+        if asteroid.check_position():
+            asteroids.pop(asteroids.index(asteroid))
+            asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
     for b in bullets:
         b.draw(win)
        
@@ -80,7 +84,6 @@ def draw(rocket, asteroids, score):
 
 def main():
     # Define asteroids list for storing newly created asteroids
-    asteroids = []
 
     count = 0
     clock = pygame.time.Clock()
@@ -115,10 +118,9 @@ def main():
                         bullets.append(Bullet())
 
         if asteroid_manager.asteroids_count <= 15:
-            # print("Creating asteroid")
             asteroids.append(asteroid_manager.create_asteroid())
 
-        draw(rocket, asteroids, score)
+        draw(rocket, score)
 
 if __name__ == "__main__":
     pygame.init()
