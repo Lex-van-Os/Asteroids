@@ -1,3 +1,12 @@
+import pygame
+from rocket import Rocket
+from asteroid import asteroid
+
+width, height = 700, 600
+backGround = pygame.image.load('sprites/background.png')
+
+FPS = 60
+
 import pygame, threading
 from rocket import Rocket
 from asteroid import Asteroid
@@ -33,6 +42,17 @@ GAME_OVER = pygame.font.SysFont("comicsans" , 100)
 ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 50, 50
 ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 35, 35
 ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 20, 20
+
+def draw(rocket, asteroid_l, asteroid_m, asteroid_s):
+    win.blit(backGround, (0,0))
+    rocket.draw(win)
+    asteroid.draw_window(asteroid_l, asteroid_m, asteroid_s, win)
+    pygame.display.update()
+
+def main():
+    asteroid_l = pygame.Rect(0, 200, ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT)
+    asteroid_m = pygame.Rect(900, 400, ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT)
+    asteroid_s = pygame.Rect(300, 0, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT)
 
 # Define asteroids list for storing newly created asteroids
 asteroids = []
