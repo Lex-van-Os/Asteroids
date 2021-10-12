@@ -27,9 +27,9 @@ class Asteroid(pygame.Rect):
         # Definen van start en eind coördinaten voor random inladen
         self.define_starting_coords()
         self.define_target_coords()
-        # Print statements voor het testen van asteroide pad
-        print(self.start_placement + " X: " + str(self.x_coords) + " Y: " + str(self.y_coords))
-        print(self.end_placement + " X: " + str(self.target_x) + " Y: " + str(self.target_y))
+        # # Print statements voor het testen van asteroide pad
+        # print(self.start_placement + " X: " + str(self.x_coords) + " Y: " + str(self.y_coords))
+        # print(self.end_placement + " X: " + str(self.target_x) + " Y: " + str(self.target_y))
         super().__init__(self.x_coords, self.y_coords, width, height)
 
 
@@ -37,7 +37,7 @@ class Asteroid(pygame.Rect):
         self.move_asteroid()
         # self.rotate_asteroid() # Functie werkt nog niet correct
         WIN.blit(self.asteroid_image, (self.x, self.y))
-        pygame.display.update()
+        # pygame.display.update()
 
 
     # Defineren van starting coördinaten. Gaat doormiddel van kijken waarvandaan de asteroide komt, om zo de deels vastgestelde coords te bepalen

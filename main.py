@@ -21,7 +21,6 @@ width, height = 1280, 720
 backGround = pygame.image.load('assets/background.png')
 backGround = pygame.transform.scale(backGround, (1280, 720))
 
-
 pygame.display.set_caption('Asteroids')
 win = pygame.display.set_mode((width,height))
 
@@ -62,16 +61,6 @@ class Bullet(object):
         if self.x < -50 or self.x > width or self.y > height or self.y < -50:
             return True
 
-def draw(rocket):
-    win.blit(backGround, (0,0))
-    rocket.draw(win)
-    asteroid.draw_window(asteroid_l, asteroid_m, asteroid_s, win)
-
-    for b in bullets:
-        b.draw(win)
-    
-    pygame.display.update()
-
 rocket = Rocket()
 bullets = []
 
@@ -81,6 +70,8 @@ def draw(rocket, asteroids, score):
     rocket.draw(win)
     for asteroid in asteroids:
         asteroid.draw_asteroid(win)
+    for b in bullets:
+        b.draw(win)
        
     if hp >= 1:
         score_text = SCORE_FONT.render("score: " + str(score), 1, (255, 255, 0))
@@ -97,7 +88,7 @@ def draw(rocket, asteroids, score):
     pygame.display.update()
 
 score = 5
-hp = 0
+hp = 2
 
 def main():
     count = 0
@@ -107,48 +98,6 @@ def main():
     while run:
         clock.tick(FPS)
         count += 1
-<<<<<<< HEAD
-        if not gameover:
-            rocket.updateLocation()
-            for b in bullets:
-                b.move()
-                if b.checkOffScreen():
-                    bullets.pop(bullets.index(b))
-
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_UP]:
-                rocket.moveForward()
-            if keys[pygame.K_RIGHT]:
-                rocket.turnRight()
-            if keys[pygame.K_LEFT]:
-                rocket.turnLeft()
-
-            asteroid_l.x += 1
-            asteroid_m.x -= 1
-            asteroid_s.y += 1
-            rocket.autoMove()
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        if not gameover:
-                            bullets.append(Bullet())
-
-            draw(rocket)
-        else:
-            # Clear all draw items and toggle game over
-            pass
-          
-        # Ervoor zorgen dat er niet meer dan een aantal astroides worden ingeladen
-        if asteroid_manager.asteroids_count <= 15:
-            print("Creating asteroid")
-            asteroids.append(asteroid_manager.create_asteroid())
-
-        rocket.autoMove()
-        draw(rocket, asteroids, score)
-=======
 
         rocket.updateLocation()
         for b in bullets:
@@ -164,9 +113,6 @@ def main():
         if keys[pygame.K_LEFT]:
             rocket.turnLeft()
 
-        asteroid_l.x += 1
-        asteroid_m.x -= 1
-        asteroid_s.y += 1
         rocket.autoMove()
 
         for event in pygame.event.get():
@@ -174,10 +120,14 @@ def main():
                 run = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    bullets.append(Bullet())
+                    if hp >= 1:
+                        bullets.append(Bullet())
 
-        draw(rocket)
->>>>>>> parent of 925d248 (Game over loop)
+        if asteroid_manager.asteroids_count <= 15:
+            # print("Creating asteroid")
+            asteroids.append(asteroid_manager.create_asteroid())
+
+        draw(rocket, asteroids, score)
 
 if __name__ == "__main__":
     pygame.init()
