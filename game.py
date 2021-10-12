@@ -38,9 +38,6 @@ ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 50, 50
 ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 35, 35
 ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 20, 20
 
-# Define asteroids list for storing newly created asteroids
-asteroids = []
-
 # Bullet class
 class Bullet(object):
 
@@ -67,13 +64,18 @@ class Bullet(object):
 
 rocket = Rocket()
 bullets = []
+# Define asteroids list for storing newly created asteroids
+asteroids = []
 
-def draw(rocket, asteroids, score, hp):
+def draw(rocket, score, hp):
     # Lijst van asteroides wordt meegegeven, waardoorheen geloopt wordt, om ze allemaal te laten bewegen
     win.blit(backGround, (0,0))
     rocket.draw(win)
     for asteroid in asteroids:
         asteroid.draw_asteroid(win)
+        if asteroid.check_position():
+            asteroids.pop(asteroids.index(asteroid))
+            asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
     for b in bullets:
         b.draw(win)
        
@@ -94,6 +96,7 @@ def draw(rocket, asteroids, score, hp):
     pygame.display.update()
 
 def main():
+
     hp = 3
     score = 0
     count = 0
@@ -152,10 +155,9 @@ def main():
                         bullets.append(Bullet())
 
         if asteroid_manager.asteroids_count <= 15:
-            # print("Creating asteroid")
             asteroids.append(asteroid_manager.create_asteroid())
 
-        draw(rocket, asteroids, score, hp)
+        draw(rocket, score, hp)
 
 if __name__ == "__main__":
     pygame.init()
