@@ -24,7 +24,7 @@ class AsteroidManager():
         if self.asteroids_count <= 15: # Bepaalt hoeveel asteroides er worden ingeladen
             asteroid_placements = self.define_placements()
             num = randrange(0, 3)
-            print(num)
+            # print(num)
             if num == 0:
                 return self.create_l_asteroid(asteroid_placements[0], asteroid_placements[1])
             elif num == 1:
