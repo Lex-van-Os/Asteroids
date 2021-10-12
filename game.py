@@ -78,9 +78,11 @@ def draw(rocket, asteroids, score, hp):
         b.draw(win)
        
     if hp >= 1:
-        score_text = SCORE_FONT.render("score: " + str(score), 1, (255, 255, 0))
+        score_text = SCORE_FONT.render("SCORE: " + str(score), 1, (255, 255, 0))
+        hp_text = SCORE_FONT.render("HP: " + str(hp), 1,(255, 255, 0))
         win.blit(score_text, (width  - score_text.get_width() - 10, 10))
-    else:
+        win.blit(hp_text, (width  - score_text.get_width() - 100, 10))
+    elif hp <= 0:
         score_text = SCORE_FONT_ELSE.render("score: " + str(score), 1, (255, 255, 0))
         win.blit(score_text, (width - 450 , 150))
         game_over_text = GAME_OVER.render("game over", 1, (255, 0 , 0))
@@ -92,7 +94,7 @@ def draw(rocket, asteroids, score, hp):
     pygame.display.update()
 
 def main():
-    hp = 1
+    hp = 3
     score = 0
     count = 0
     clock = pygame.time.Clock()
@@ -115,9 +117,10 @@ def main():
                 if(a.y >= rocket.y - rocket.h//2 and a.y <= rocket.y + rocket.h//2) or (a.y  +a.h >= rocket.y - rocket.h//2 and a.y + a.h <= rocket.y + rocket.h//2):
                     # Delete the astroid and rocket
                     asteroids.pop(asteroids.index(a))
-                    rocket.destroyRocket()
-                    # Game over
                     hp -= 1
+                    # Game over
+                    if hp <= 0:
+                        rocket.destroyRocket()
 
             # Bullet collison with astroids
             for b in bullets:
