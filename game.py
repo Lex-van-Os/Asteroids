@@ -93,12 +93,12 @@ def draw(rocket, score, hp):
         win.blit(hp_text, (width  - score_text.get_width() - 100, 10))
     elif hp <= 0:
         score_text = SCORE_FONT_ELSE.render("score: " + str(score), 1, (255, 255, 0))
-        win.blit(score_text, (width - 450 , 150))
+        win.blit(score_text, (width / 2 - 75 , 200))
         game_over_text = GAME_OVER.render("game over", 1, (255, 0 , 0))
-        win.blit(game_over_text, (width - 530 , 75))
-        win.blit(highscore_button, ( 200 , 250))
-        win.blit(retry_button, ( 200 , 200))
-        win.blit(close_button, ( 200 , 300))
+        win.blit(game_over_text, (width / 2 - 200 , 75))
+        win.blit(highscore_button, ( width / 2 - highscore_width / 2 , 400))
+        win.blit(retry_button, ( width / 2 - retry_width / 2 , 300))
+        win.blit(close_button, ( width / 2 - close_width / 2 , 500))
         
     
         mouse = pygame.mouse.get_pos()
