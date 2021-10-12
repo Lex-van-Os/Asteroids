@@ -107,12 +107,12 @@ if __name__ == "__main__":
     win = pygame.display.set_mode((width,height))
     
         # Ervoor zorgen dat er niet meer dan een aantal astroides worden ingeladen
-        if asteroid_manager.asteroids_count <= 15:
+    if asteroid_manager.asteroids_count <= 15:
             print("Creating asteroid")
             asteroids.append(asteroid_manager.create_asteroid())
 
-        rocket.autoMove()
-        draw(rocket, asteroids, score)
+    rocket.autoMove()
+    draw(rocket, asteroids, score)
 
 
 if __name__ == "__main__":
