@@ -16,4 +16,3 @@ class asteroid(object):
         WIN.blit(ASTEROID_LARGE, (asteroid_l.x, asteroid_l.y))
         WIN.blit(ASTEROID_MEDIUM, (asteroid_m.x, asteroid_m.y))
         WIN.blit(ASTEROID_SMALL, (asteroid_s.x, asteroid_s.y))
-        pygame.display.update()
