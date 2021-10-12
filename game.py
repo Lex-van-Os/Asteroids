@@ -68,7 +68,7 @@ class Bullet(object):
 rocket = Rocket()
 bullets = []
 
-def draw(rocket, asteroids, score):
+def draw(rocket, asteroids, score, hp):
     # Lijst van asteroides wordt meegegeven, waardoorheen geloopt wordt, om ze allemaal te laten bewegen
     win.blit(backGround, (0,0))
     rocket.draw(win)
@@ -91,10 +91,9 @@ def draw(rocket, asteroids, score):
         
     pygame.display.update()
 
-score = 5
-hp = 1
-
 def main():
+    hp = 1
+    score = 0
     count = 0
     clock = pygame.time.Clock()
     run = True
@@ -108,6 +107,27 @@ def main():
             b.move()
             if b.checkOffScreen():
                 bullets.pop(bullets.index(b))
+
+        # Rocket collision with astroids
+        for a in asteroids:
+            # Calculate if rocket has same position as astroid
+            if (a.x >= rocket.x - rocket.w//2 and a.x <= rocket.x + rocket.w//2) or (a.x + a.w <= rocket.x + rocket.w//2 and a.x + a.w >= rocket.x - rocket.w//2):
+                if(a.y >= rocket.y - rocket.h//2 and a.y <= rocket.y + rocket.h//2) or (a.y  +a.h >= rocket.y - rocket.h//2 and a.y + a.h <= rocket.y + rocket.h//2):
+                    # Delete the astroid and rocket
+                    asteroids.pop(asteroids.index(a))
+                    rocket.destroyRocket()
+                    # Game over
+                    hp -= 1
+
+            # Bullet collison with astroids
+            for b in bullets:
+                # Calculate if bullet has same position as astroid
+                    if (b.x >= a.x and b.x <= a.x + a.w) or b.x + b.w >= a.x and b.x + b.w <= a.x + a.w:
+                        if (b.y >= a.y and b.y <= a.y + a.h) or b.y + b.h >= a.y and b.y + b.h <= a.y + a.h:
+                            # Delete the astroid
+                            asteroids.pop(asteroids.index(a))
+                            # Score plus 1
+                            score += 1
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
@@ -132,7 +152,7 @@ def main():
             # print("Creating asteroid")
             asteroids.append(asteroid_manager.create_asteroid())
 
-        draw(rocket, asteroids, score)
+        draw(rocket, asteroids, score, hp)
 
 if __name__ == "__main__":
     pygame.init()

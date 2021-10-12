@@ -74,3 +74,6 @@ class Rocket(object):
             self.y = height
         elif self.y > height + 50:
             self.y = 0
+
+    def destroyRocket(self):
+        playerRocket.set_alpha(0)
