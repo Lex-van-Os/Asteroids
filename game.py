@@ -6,6 +6,8 @@ from asteroid_manager import AsteroidManager
 from omgeving import highscore_button
 from omgeving import retry_button
 from omgeving import close_button
+from pygame import mixer
+import os
 
 pygame.init()
 
@@ -20,6 +22,7 @@ pygame.font.init()
 width, height = 1280, 720
 backGround = pygame.image.load('assets/background.png')
 backGround = pygame.transform.scale(backGround, (1280, 720))
+shoot = pygame.mixer.Sound('assets/Gun+Silencer.mp3')
 
 pygame.display.set_caption('Asteroids')
 win = pygame.display.set_mode((width,height))
@@ -121,6 +124,7 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     if hp >= 1:
+                        shoot.play()
                         bullets.append(Bullet())
 
         if asteroid_manager.asteroids_count <= 15:
