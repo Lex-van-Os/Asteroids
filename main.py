@@ -16,7 +16,7 @@ width, height = 1280, 720
 backGround = pygame.image.load('assets/background.png')
 backGround = pygame.transform.scale(backGround, (1280, 720))
 
-pygame.display.set_caption("First Game!")
+pygame.display.set_caption("asteroids")
 
 FPS = 60
 
