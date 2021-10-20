@@ -123,6 +123,8 @@ def draw(rocket, score, hp):
                 #print("retry")
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     print("retry pressed")
+                    asteroid_manager.asteroids_count = 0
+                    asteroids.clear()
                     playerRocket.set_alpha(1000)
                     main()
                 
@@ -174,6 +176,7 @@ def main():
                 if(a.y >= rocket.y - rocket.h//2 and a.y <= rocket.y + rocket.h//2) or (a.y  +a.h >= rocket.y - rocket.h//2 and a.y + a.h <= rocket.y + rocket.h//2):
                     # Delete the astroid and rocket
                     asteroids.pop(asteroids.index(a))
+                    asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
                     hp -= 1
                     # Game over
                     if hp <= 0:

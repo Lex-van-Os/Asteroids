@@ -1,4 +1,4 @@
-import pygame, os, random
+import pygame, os, random, math
 from environment import Environment
 
 
@@ -15,7 +15,6 @@ ASTEROID_SMALL = pygame.transform.scale(ASTEROID_SMALL_IMG, (ASTEROID_S_WIDTH, A
 class Asteroid(pygame.Rect):
 
     def __init__(self, size, speed, image, width, height, start_placement, end_placement):
-        self.rotation = 0 # Rotation voor het rotaten, begint bij 0. Wordt nog niet gebruikt ivm nog niet complete functionaliteit
         self.asteroid_size = size
         self.asteroid_image = image
         self.asteroid_speed = speed
@@ -23,6 +22,11 @@ class Asteroid(pygame.Rect):
         self.asteroid_height = height
         self.start_placement = start_placement
         self.end_placement = end_placement
+
+        self.angle = 0 # Rotation voor het rotaten, begint bij 0. Wordt nog niet gebruikt ivm nog niet complete functionaliteit
+        self.rotation = pygame.transform.rotate(self.asteroid_image, self.angle)
+        self.rotationRect = self.rotation.get_rect()
+        self.rotationRect.center = (self.x, self.y) # Set the rocket to the center of the screen
 
         # Definen van start en eind coördinaten voor random inladen
         self.define_starting_coords()
@@ -34,9 +38,9 @@ class Asteroid(pygame.Rect):
 
 
     def draw_asteroid(self, WIN):
+        self.rotate_asteroid() # Functie werkt nog niet correct
         self.move_asteroid()
-        # self.rotate_asteroid() # Functie werkt nog niet correct
-        WIN.blit(self.asteroid_image, (self.x, self.y))
+        WIN.blit(self.rotation, self.rotationRect)
         # pygame.display.update()
 
 
@@ -104,9 +108,11 @@ class Asteroid(pygame.Rect):
 
 
     # Functie is Work In Progress, kwam hier niet uit. Image moet niet alleen gedraaid worden, maar ook gedraaid om zijn middelpunt -Lex
-    # def rotate_asteroid(self):
-    #     self.asteroid_image = pygame.transform.rotate(self.asteroid_image, self.rotation)
-    #     self.asteroid_image = self.asteroid_image.get_rect(center = image.get_rect(topleft = topleft).center)
+    def rotate_asteroid(self):
+        self.angle += 5
+        self.rotation = pygame.transform.rotate(self.asteroid_image, self.angle)
+        self.rotationRect = self.rotation.get_rect()
+        self.rotationRect.center = (self.x, self.y)
 
 
     def check_position(self):
