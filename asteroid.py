@@ -1,4 +1,4 @@
-import pygame, os, random
+import pygame, os, random, math
 from environment import Environment
 
 
@@ -13,9 +13,9 @@ ASTEROID_MEDIUM = pygame.transform.scale(ASTEROID_MEDIUM_IMG, (ASTEROID_M_WIDTH,
 ASTEROID_SMALL = pygame.transform.scale(ASTEROID_SMALL_IMG, (ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT))
 
 class Asteroid(pygame.Rect):
+    speed_delay_count = 0 # Speed delay count, voor vergelijking aan speed_delay variabel
 
     def __init__(self, size, speed, image, width, height, start_placement, end_placement):
-        self.rotation = 0 # Rotation voor het rotaten, begint bij 0. Wordt nog niet gebruikt ivm nog niet complete functionaliteit
         self.asteroid_size = size
         self.asteroid_image = image
         self.asteroid_speed = speed
@@ -23,6 +23,12 @@ class Asteroid(pygame.Rect):
         self.asteroid_height = height
         self.start_placement = start_placement
         self.end_placement = end_placement
+        self.speed_delay = 1 # Variabel voor delay in bewegen, staat gelijk aan difficulty. Hogere delay = meer delay in move functie
+
+        self.angle = 0 # Rotation voor het rotaten, begint bij 0. Wordt nog niet gebruikt ivm nog niet complete functionaliteit
+        self.rotation = pygame.transform.rotate(self.asteroid_image, self.angle)
+        self.rotationRect = self.rotation.get_rect()
+        self.rotationRect.center = (self.x, self.y) # Set the rocket to the center of the screen
 
         # Definen van start en eind coördinaten voor random inladen
         self.define_starting_coords()
@@ -33,10 +39,21 @@ class Asteroid(pygame.Rect):
         super().__init__(self.x_coords, self.y_coords, width, height)
 
 
+    # Draw asteroid makes use of speed_delay and speed_delay_count to define the speed of asteroids
+    # Asteroids only move when speed_delay_count is 0. Else the count gets incremented and reset based on speed_delay value
+    # The higher speed delay, the slower asteroids move
     def draw_asteroid(self, WIN):
-        self.move_asteroid()
-        # self.rotate_asteroid() # Functie werkt nog niet correct
-        WIN.blit(self.asteroid_image, (self.x, self.y))
+        if self.speed_delay_count == 0:
+            self.rotate_asteroid()
+            self.move_asteroid()
+            if self.speed_delay != 0:
+                self.speed_delay_count += 1
+        elif self.speed_delay_count == self.speed_delay:
+            self.speed_delay_count = 0
+        else:
+            self.speed_delay_count += 1
+        WIN.blit(self.rotation, self.rotationRect)
+
         # pygame.display.update()
 
 
@@ -83,8 +100,8 @@ class Asteroid(pygame.Rect):
     # waardes, is de lineare lijn waarin de asteroides vliegen, altijd gelijk (met random start en eindpunten)
     # TODO: Ervoor zorgen dat de lineare lijn niet altijd even scherp is, door verschillende waardes aan de x / y posities te geven
     def move_asteroid(self):
-        self.move_asteroid_x()
-        self.move_asteroid_y()
+            self.move_asteroid_x()
+            self.move_asteroid_y()
 
 
     # Liggend aan waar de asteroide vandaan komt, wordt er de asteroide snelheid toegevoegd of afgetrokken van de x waarde (allebei int)
@@ -104,9 +121,11 @@ class Asteroid(pygame.Rect):
 
 
     # Functie is Work In Progress, kwam hier niet uit. Image moet niet alleen gedraaid worden, maar ook gedraaid om zijn middelpunt -Lex
-    # def rotate_asteroid(self):
-    #     self.asteroid_image = pygame.transform.rotate(self.asteroid_image, self.rotation)
-    #     self.asteroid_image = self.asteroid_image.get_rect(center = image.get_rect(topleft = topleft).center)
+    def rotate_asteroid(self):
+        self.angle += 5
+        self.rotation = pygame.transform.rotate(self.asteroid_image, self.angle)
+        self.rotationRect = self.rotation.get_rect()
+        self.rotationRect.center = (self.x, self.y)
 
 
     def check_position(self):

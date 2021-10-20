@@ -12,12 +12,12 @@ from omgeving import retry_width
 from omgeving import retry_length
 from omgeving import close_width 
 from omgeving import close_length
+from rocket import playerRocket
 
 from pygame import mixer
 import os
 
 pygame.init()
-
 width, height = 1280, 720
 
 # Environment for pre-defined width and height
@@ -83,6 +83,7 @@ def draw(rocket, score, hp):
         if asteroid.check_position():
             asteroids.pop(asteroids.index(asteroid))
             asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
+            
     for b in bullets:
         b.draw(win)
        
@@ -102,36 +103,53 @@ def draw(rocket, score, hp):
         
     
         mouse = pygame.mouse.get_pos()
-        click = pygame.mouse.get_pressed()
         #print(click)
         #print(mouse) 
-        #highscore button trigger cords: 520 to 760 and 400 to 475
-        if 520 + highscore_width > mouse[0] > 520 and 400 + highscore_length > mouse[1] >400:
-            highscore_button.set_alpha(50)
-            print("highscore")
+        #highscore button darkener cords: 520 to 760 and 400 to 475
+        for event in pygame.event.get():
+            if 520 + highscore_width > mouse[0] > 520 and 400 + highscore_length > mouse[1] >400:
+                highscore_button.set_alpha(50)
+                #print("highscore")
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        print("highscore pressed")
+                
+            else:
+                highscore_button.set_alpha(1000)
             
-        else:
-            highscore_button.set_alpha(1000)
-        
-        #retry button trigger cords: 520 to 760 and 300 to 375
-        if 520 + retry_width > mouse[0] > 520 and 300 + retry_length > mouse[1] > 300:
-            retry_button.set_alpha(50)
-            print("retry")
-        else:
-            retry_button.set_alpha(1000)
-        
-        #close button trigger cords: 520 to 760 and 500 to 575
-        if 520 + close_width > mouse[0] > 520 and 500 + close_length > mouse[1] > 500:
-            close_button.set_alpha(50)
-            print("close")
-        else:
-            close_button.set_alpha(1000)
+            #retry button darkener cords: 520 to 760 and 300 to 375
+            if 520 + retry_width > mouse[0] > 520 and 300 + retry_length > mouse[1] > 300:
+                retry_button.set_alpha(50)
+                #print("retry")
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    print("retry pressed")
+                    asteroid_manager.asteroids_count = 0
+                    asteroids.clear()
+                    playerRocket.set_alpha(1000)
+                    main()
+                
+
+                    
+            else:
+                retry_button.set_alpha(1000)
+            
+            #close button darkener cords: 520 to 760 and 500 to 575
+            if 520 + close_width > mouse[0] > 520 and 500 + close_length > mouse[1] > 500:
+                close_button.set_alpha(50)
+                #print("close")
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    print("closed pressed")
+                    pygame.quit
+                    quit()
+            else:
+                close_button.set_alpha(1000)
+
 
     pygame.display.update()
 
 def main():
 
-    hp = 3
+    hp = 1
     score = 0
     count = 0
     clock = pygame.time.Clock()
@@ -158,6 +176,7 @@ def main():
                 if(a.y >= rocket.y - rocket.h//2 and a.y <= rocket.y + rocket.h//2) or (a.y  +a.h >= rocket.y - rocket.h//2 and a.y + a.h <= rocket.y + rocket.h//2):
                     # Delete the astroid and rocket
                     asteroids.pop(asteroids.index(a))
+                    asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
                     hp -= 1
                     # Game over
                     if hp <= 0:
