@@ -18,13 +18,12 @@ from pygame import mixer
 import os
 
 pygame.init()
+pygame.font.init()
 width, height = 1280, 720
 
 # Environment for pre-defined width and height
 environment = Environment()
 asteroid_manager = AsteroidManager()
-
-pygame.font.init()
 
 width, height = 1280, 720
 backGround = pygame.image.load(os.path.join('assets', 'background.png'))
@@ -37,10 +36,12 @@ win = pygame.display.set_mode((width,height))
 
 FPS = 60
 
+# Score and Game Over titles fonts
 SCORE_FONT = pygame.font.SysFont('commicsans', 40)
 SCORE_FONT_ELSE = pygame.font.SysFont('commicsans', 60)
 GAME_OVER = pygame.font.SysFont("comicsans" , 100)
 
+# asteroids perameters
 ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 50, 50
 ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 35, 35
 ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 20, 20
@@ -83,10 +84,12 @@ def draw(rocket, score, hp):
         if asteroid.check_position():
             asteroids.pop(asteroids.index(asteroid))
             asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
-            
+
+    # Bullets drawing        
     for b in bullets:
         b.draw(win)
-       
+    
+    # Score and game over screens render
     if hp >= 1:
         score_text = SCORE_FONT.render("SCORE: " + str(score), 1, (255, 255, 0))
         hp_text = SCORE_FONT.render("HP: " + str(hp), 1,(255, 255, 0))
@@ -101,7 +104,7 @@ def draw(rocket, score, hp):
         win.blit(retry_button, ( width / 2 - retry_width / 2 , 300))
         win.blit(close_button, ( width / 2 - close_width / 2 , 500))
         
-    
+        # interactive buttons
         mouse = pygame.mouse.get_pos()
         #print(click)
         #print(mouse) 
@@ -122,12 +125,10 @@ def draw(rocket, score, hp):
                 retry_button.set_alpha(50)
                 #print("retry")
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    print("retry pressed")
+                    #print("retry pressed")
                     playerRocket.set_alpha(1000)
                     main()
-                
-
-                    
+                   
             else:
                 retry_button.set_alpha(1000)
             
@@ -136,9 +137,10 @@ def draw(rocket, score, hp):
                 close_button.set_alpha(50)
                 #print("close")
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    print("closed pressed")
-                    pygame.quit
-                    quit()
+                    #print("closed pressed")
+                    pygame.quit()
+                    quit
+
             else:
                 close_button.set_alpha(1000)
 
@@ -147,7 +149,8 @@ def draw(rocket, score, hp):
 
 def main():
 
-    hp = 1
+    # Variables
+    hp = 3
     score = 0
     count = 0
     clock = pygame.time.Clock()
@@ -185,6 +188,7 @@ def main():
                             # Score plus 1
                             score += 1
 
+        # Movement
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
             rocket.moveForward()
@@ -195,15 +199,19 @@ def main():
 
         rocket.autoMove()
 
+        # Quiting
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+            
+            # Shooting
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     if hp >= 1:
                         shoot.play()
                         bullets.append(Bullet())
 
+        # Astroids spawning
         if asteroid_manager.asteroids_count <= 15:
             asteroids.append(asteroid_manager.create_asteroid())
 
