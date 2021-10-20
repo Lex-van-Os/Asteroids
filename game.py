@@ -125,7 +125,9 @@ def draw(rocket, score, hp):
                 retry_button.set_alpha(50)
                 #print("retry")
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    #print("retry pressed")
+                    # print("retry pressed")
+                    asteroid_manager.asteroids_count = 0
+                    asteroids.clear()
                     playerRocket.set_alpha(1000)
                     main()
                    
@@ -155,6 +157,10 @@ def main():
     count = 0
     clock = pygame.time.Clock()
     run = True
+    # Added commented music logic to be turned on on specific occassions :) 
+    # mixer.music.load(os.path.join('', 'on_on.mp3'))
+    # mixer.music.play()
+    # mixer.music.set_volume(0.5)
 
     while run:
         clock.tick(FPS)
@@ -173,6 +179,7 @@ def main():
                 if(a.y >= rocket.y - rocket.h//2 and a.y <= rocket.y + rocket.h//2) or (a.y  +a.h >= rocket.y - rocket.h//2 and a.y + a.h <= rocket.y + rocket.h//2):
                     # Delete the astroid and rocket
                     asteroids.pop(asteroids.index(a))
+                    asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
                     hp -= 1
                     # Game over
                     if hp <= 0:
@@ -185,6 +192,7 @@ def main():
                         if (b.y >= a.y and b.y <= a.y + a.h) or b.y + b.h >= a.y and b.y + b.h <= a.y + a.h:
                             # Delete the astroid
                             asteroids.pop(asteroids.index(a))
+                            asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
                             # Score plus 1
                             score += 1
 
