@@ -147,8 +147,8 @@ def draw(rocket, score, hp):
 
     pygame.display.update()
 
-def main():
 
+def main():
     hp = 1
     score = 0
     count = 0
@@ -187,6 +187,13 @@ def main():
                 # Calculate if bullet has same position as astroid
                     if (b.x >= a.x and b.x <= a.x + a.w) or b.x + b.w >= a.x and b.x + b.w <= a.x + a.w:
                         if (b.y >= a.y and b.y <= a.y + a.h) or b.y + b.h >= a.y and b.y + b.h <= a.y + a.h:
+                            # Delete the bullet
+                            bullets.pop(bullets.index(b))
+                            # Splitting of the asteroid in case of size large or medium
+                            if a.asteroid_size == 'l':
+                                asteroids.extend(asteroid_manager.split_l_asteroid(a.x, a.y))
+                            elif a.asteroid_size == 'm':
+                                asteroids.extend(asteroid_manager.split_m_asteroid(a.x, a.y))
                             # Delete the astroid
                             asteroids.pop(asteroids.index(a))
                             asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
