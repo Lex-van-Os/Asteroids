@@ -50,23 +50,23 @@ class Bullet(object):
 
     def __init__(self):
         self.point = rocket.head
-        self.x, self.y = self.point
-        self.w = 4
-        self.h = 4
-        self.c = rocket.cosine
-        self.s = rocket.sine
-        self.xv = self.c * 10
-        self.yv = self.s * 10
+        self.xAxis, self.yAxis = self.point
+        self.widthBullet = 4
+        self.heightBullet = 4
+        self.cosine = rocket.cosine
+        self.sine = rocket.sine
+        self.xv = self.cosine * 10
+        self.yv = self.sine * 10
 
     def move(self):
-        self.x += self.xv
-        self.y -= self.yv
+        self.xAxis += self.xv
+        self.yAxis -= self.yv
 
     def draw(self, win):
-        pygame.draw.rect(win, (255, 255, 255), [self.x, self.y, self.w, self.h])
+        pygame.draw.rect(win, (255, 255, 255), [self.xAxis, self.yAxis, self.widthBullet, self.heightBullet ])
 
     def checkOffScreen(self):
-        if self.x < -50 or self.x > width or self.y > height or self.y < -50:
+        if self.xAxis < -50 or self.xAxis > width or self.yAxis > height or self.yAxis < -50:
             return True
 
 rocket = Rocket()
@@ -172,8 +172,8 @@ def main():
         # Rocket collision with astroids
         for a in asteroids:
             # Calculate if rocket has same position as astroid
-            if (a.x >= rocket.x - rocket.w//2 and a.x <= rocket.x + rocket.w//2) or (a.x + a.w <= rocket.x + rocket.w//2 and a.x + a.w >= rocket.x - rocket.w//2):
-                if(a.y >= rocket.y - rocket.h//2 and a.y <= rocket.y + rocket.h//2) or (a.y  +a.h >= rocket.y - rocket.h//2 and a.y + a.h <= rocket.y + rocket.h//2):
+            if (a.x >= rocket.xAxis - rocket.widthRocket//2 and a.x <= rocket.xAxis + rocket.widthRocket//2) or (a.x + a.w <= rocket.xAxis + rocket.widthRocket//2 and a.x + a.w >= rocket.xAxis - rocket.widthRocket//2):
+                if(a.y >= rocket.yAxis - rocket.heightRocket//2 and a.y <= rocket.yAxis + rocket.heightRocket//2) or (a.y  +a.h >= rocket.yAxis - rocket.heightRocket//2 and a.y + a.h <= rocket.yAxis + rocket.heightRocket//2):
                     # Delete the astroid and rocket
                     asteroids.pop(asteroids.index(a))
                     asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
@@ -185,8 +185,8 @@ def main():
             # Bullet collison with astroids
             for b in bullets:
                 # Calculate if bullet has same position as astroid
-                    if (b.x >= a.x and b.x <= a.x + a.w) or b.x + b.w >= a.x and b.x + b.w <= a.x + a.w:
-                        if (b.y >= a.y and b.y <= a.y + a.h) or b.y + b.h >= a.y and b.y + b.h <= a.y + a.h:
+                    if (b.xAxis >= a.x and b.xAxis <= a.x + a.w) or b.xAxis + b.widthBullet >= a.x and b.xAxis + b.widthBullet <= a.x + a.w:
+                        if (b.yAxis >= a.y and b.yAxis <= a.y + a.h) or b.yAxis + b.heightBullet >= a.y and b.yAxis + b.heightBullet <= a.y + a.h:
                             # Delete the bullet
                             bullets.pop(bullets.index(b))
                             # Splitting of the asteroid in case of size large or medium
