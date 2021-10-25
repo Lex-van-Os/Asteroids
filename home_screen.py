@@ -160,8 +160,8 @@ qulianLink = Button(
 )
 # Create Background sound
 pygame.mixer.init()
-pygame.mixer.music.load(os.path.join("assets", "masterchief.mp3"))
-pygame.mixer.music.play()
+# pygame.mixer.music.load(os.path.join("assets", "masterchief.mp3"))
+# pygame.mixer.music.play()
 
 
 def main():
