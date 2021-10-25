@@ -29,6 +29,7 @@ width, height = 1280, 720
 backGround = pygame.image.load(os.path.join('assets', 'background.png'))
 backGround = pygame.transform.scale(backGround, (1280, 720))
 shoot = pygame.mixer.Sound(f'.\\' + os.path.join('assets', 'Gun+Silencer.mp3'))
+explosion_sound = pygame.mixer.Sound(f'.\\' + os.path.join('assets', 'explosion_sound.wav'))
 # shoot = pygame.mixer.Sound(os.path.join('assets', 'hanghang69.mp3'))
 
 pygame.display.set_caption('Asteroids')
@@ -195,6 +196,8 @@ def main():
                             asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
                             # Score plus 1
                             score += 1
+                            # Add a explosion effect and sound effect
+                            explosion_sound.play()
 
         # Movement
         keys = pygame.key.get_pressed()
