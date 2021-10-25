@@ -24,7 +24,6 @@ class AsteroidManager():
         if self.asteroids_count <= 15: # Bepaalt hoeveel asteroides er worden ingeladen
             asteroid_placements = self.define_placements()
             num = randrange(0, 3)
-            # print(num)
             if num == 0:
                 return self.create_l_asteroid(asteroid_placements[0], asteroid_placements[1])
             elif num == 1:
@@ -64,3 +63,19 @@ class AsteroidManager():
         self.asteroids_count = self.asteroids_count + 1
         return asteroid
 
+    def split_l_asteroid(self, parent_asteroid_x, parent_asteroid_y):
+        return_asteroids = []
+        asteroid_m = Asteroid(asteroid_sizes[1], asteroid_speeds[1], ASTEROID_MEDIUM, ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT, 'none', choice(asteroid_placements), parent_asteroid_x, parent_asteroid_y)
+        asteroid_s = Asteroid(asteroid_sizes[2], asteroid_speeds[2], ASTEROID_SMALL, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT, 'none', choice(asteroid_placements), parent_asteroid_x, parent_asteroid_y)
+        self.asteroids_count = self.asteroids_count + 2
+        return_asteroids.extend((asteroid_m, asteroid_s))
+        return return_asteroids
+
+
+    def split_m_asteroid(self, parent_asteroid_x, parent_asteroid_y):
+        return_asteroids = []
+        asteroid_s_1 = Asteroid(asteroid_sizes[2], asteroid_speeds[2], ASTEROID_SMALL, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT, 'none', choice(asteroid_placements), parent_asteroid_x, parent_asteroid_y)
+        asteroid_s_2 = Asteroid(asteroid_sizes[2], asteroid_speeds[2], ASTEROID_SMALL, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT, 'none', choice(asteroid_placements), parent_asteroid_x, parent_asteroid_y)
+        self.asteroids_count = self.asteroids_count + 2
+        return_asteroids.extend((asteroid_s_1, asteroid_s_2))
+        return return_asteroids

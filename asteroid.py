@@ -15,7 +15,7 @@ ASTEROID_SMALL = pygame.transform.scale(ASTEROID_SMALL_IMG, (ASTEROID_S_WIDTH, A
 class Asteroid(pygame.Rect):
     speed_delay_count = 0 # Speed delay count, voor vergelijking aan speed_delay variabel
 
-    def __init__(self, size, speed, image, width, height, start_placement, end_placement):
+    def __init__(self, size, speed, image, width, height, start_placement, end_placement, pre_defined_x=None, pre_defined_y=None):
         self.asteroid_size = size
         self.asteroid_image = image
         self.asteroid_speed = speed
@@ -23,6 +23,8 @@ class Asteroid(pygame.Rect):
         self.asteroid_height = height
         self.start_placement = start_placement
         self.end_placement = end_placement
+        self.pre_defined_x = pre_defined_x
+        self.pre_defined_y = pre_defined_y
         self.speed_delay = 1 # Variabel voor delay in bewegen, staat gelijk aan difficulty. Hogere delay = meer delay in move functie
 
         self.angle = 0 # Rotation voor het rotaten, begint bij 0. Wordt nog niet gebruikt ivm nog niet complete functionaliteit
@@ -75,6 +77,14 @@ class Asteroid(pygame.Rect):
         if self.start_placement == 'right':
             self.x_coords = 1280
             self.y_coords = random.randint(0, environment.environment_height)
+        if self.start_placement == 'none':
+            if self.pre_defined_x != None and self.pre_defined_y != None:
+                self.x_coords = self.pre_defined_x
+                self.y_coords = self.pre_defined_y
+            else:
+                print("Couldn't find pre defined x and y coords")
+                self.x_coords = 0
+                self.y_coords = 0
 
 
     # Functie voor het defineren van de target positie. Dit werkt hetzelfde als het defineren van de start coördinaten
