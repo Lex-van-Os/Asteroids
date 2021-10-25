@@ -1,5 +1,5 @@
 from asteroid import Asteroid
-from random import choice, random, randrange, uniform
+from random import choice, randrange
 import pygame, os
 
 ASTEROID_LARGE_IMG = pygame.image.load(os.path.join('assets/', 'asteroid_large.png'))
@@ -7,7 +7,7 @@ ASTEROID_MEDIUM_IMG = pygame.image.load(os.path.join('assets/', 'asteroid_medium
 ASTEROID_SMALL_IMG = pygame.image.load(os.path.join('assets/', 'asteroid_small.png'))
 ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 50, 50
 ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 35, 35
-ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 20, 20
+ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 30, 30
 ASTEROID_LARGE = pygame.transform.scale(ASTEROID_LARGE_IMG, (ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT))
 ASTEROID_MEDIUM = pygame.transform.scale(ASTEROID_MEDIUM_IMG, (ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT))
 ASTEROID_SMALL = pygame.transform.scale(ASTEROID_SMALL_IMG, (ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT))
@@ -24,7 +24,6 @@ class AsteroidManager():
         if self.asteroids_count <= 15: # Bepaalt hoeveel asteroides er worden ingeladen
             asteroid_placements = self.define_placements()
             num = randrange(0, 3)
-            # print(num)
             if num == 0:
                 return self.create_l_asteroid(asteroid_placements[0], asteroid_placements[1])
             elif num == 1:
@@ -64,3 +63,19 @@ class AsteroidManager():
         self.asteroids_count = self.asteroids_count + 1
         return asteroid
 
+    def split_l_asteroid(self, parent_asteroid_x, parent_asteroid_y):
+        return_asteroids = []
+        asteroid_m = Asteroid(asteroid_sizes[1], asteroid_speeds[1], ASTEROID_MEDIUM, ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT, 'none', choice(asteroid_placements), parent_asteroid_x, parent_asteroid_y)
+        asteroid_s = Asteroid(asteroid_sizes[2], asteroid_speeds[2], ASTEROID_SMALL, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT, 'none', choice(asteroid_placements), parent_asteroid_x, parent_asteroid_y)
+        self.asteroids_count = self.asteroids_count + 2
+        return_asteroids.extend((asteroid_m, asteroid_s))
+        return return_asteroids
+
+
+    def split_m_asteroid(self, parent_asteroid_x, parent_asteroid_y):
+        return_asteroids = []
+        asteroid_s_1 = Asteroid(asteroid_sizes[2], asteroid_speeds[2], ASTEROID_SMALL, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT, 'none', choice(asteroid_placements), parent_asteroid_x, parent_asteroid_y)
+        asteroid_s_2 = Asteroid(asteroid_sizes[2], asteroid_speeds[2], ASTEROID_SMALL, ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT, 'none', choice(asteroid_placements), parent_asteroid_x, parent_asteroid_y)
+        self.asteroids_count = self.asteroids_count + 2
+        return_asteroids.extend((asteroid_s_1, asteroid_s_2))
+        return return_asteroids

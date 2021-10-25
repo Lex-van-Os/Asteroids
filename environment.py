@@ -7,3 +7,5 @@ class Environment(): # Environment class, voor het vaststellen en makkelijk kunn
         # Wordt nog niet gebruikt
         self.asteroid_window_width = self.environment_width / 100 * 20
         self.asteroid_window_height = self.environment_height / 100 * 20
+        self.out_of_bounds_width = 1300
+        self.out_of_bounds_height = 740
