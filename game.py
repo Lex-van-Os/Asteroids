@@ -15,6 +15,7 @@ from omgeving import close_length
 from rocket import playerRocket
 import scores_screen
 import json
+import home_screen
 
 from pygame import mixer
 import os
@@ -119,6 +120,7 @@ def draw(rocket, score, hp, difficulty):
         win.blit(highscore_button, (width / 2 - highscore_width / 2, 400))
         win.blit(retry_button, (width / 2 - retry_width / 2, 300))
         win.blit(close_button, (width / 2 - close_width / 2, 500))
+        run = False
 
         mouse = pygame.mouse.get_pos()
         # highscore button darkener cords: 520 to 760 and 400 to 475
@@ -159,14 +161,8 @@ def draw(rocket, score, hp, difficulty):
             ):
                 close_button.set_alpha(50)
                 if event.type == pygame.MOUSEBUTTONDOWN:
-
-                    print("closed pressed")
+                    home_screen.main()
                     scores_screen.check_for_new_highscore()
-
-
-                    pygame.quit
-                    quit()
-    
             else:
                 close_button.set_alpha(1000)
 
