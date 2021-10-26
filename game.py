@@ -83,17 +83,22 @@ rocket = Rocket()
 bullets = []
 # Define asteroids list for storing newly created asteroids
 asteroids = []
+speed_delay = 0
 
-
-def draw(rocket, score, hp):
+def draw(rocket, score, hp, difficulty):
     # Lijst van asteroides wordt meegegeven, waardoorheen geloopt wordt, om ze allemaal te laten bewegen
     win.blit(backGround, (0, 0))
     rocket.draw(win)
     for asteroid in asteroids:
-        asteroid.draw_asteroid(win)
+        if asteroid.speed_delay == difficulty:
+                asteroid.place_asteroid()
+                asteroid.speed_delay = 0
+        else:
+            asteroid.speed_delay += 1
         if asteroid.check_position():
             asteroids.pop(asteroids.index(asteroid))
             asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
+        asteroid.draw_asteroid(win)
 
     for b in bullets:
         b.draw(win)
@@ -113,8 +118,6 @@ def draw(rocket, score, hp):
         win.blit(close_button, (width / 2 - close_width / 2, 500))
 
         mouse = pygame.mouse.get_pos()
-        # print(click)
-        # print(mouse)
         # highscore button darkener cords: 520 to 760 and 400 to 475
         for event in pygame.event.get():
             if (
@@ -122,7 +125,6 @@ def draw(rocket, score, hp):
                 and 400 + highscore_length > mouse[1] > 400
             ):
                 highscore_button.set_alpha(50)
-                # print("highscore")
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         print("highscore pressed")
@@ -136,13 +138,11 @@ def draw(rocket, score, hp):
                 and 300 + retry_length > mouse[1] > 300
             ):
                 retry_button.set_alpha(50)
-                # print("retry")
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    print("retry pressed")
                     asteroid_manager.asteroids_count = 0
                     asteroids.clear()
                     playerRocket.set_alpha(1000)
-                    main()
+                    main(difficulty)
 
             else:
                 retry_button.set_alpha(1000)
@@ -153,9 +153,7 @@ def draw(rocket, score, hp):
                 and 500 + close_length > mouse[1] > 500
             ):
                 close_button.set_alpha(50)
-                # print("close")
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    print("closed pressed")
                     pygame.quit
                     quit()
             else:
@@ -164,7 +162,7 @@ def draw(rocket, score, hp):
     pygame.display.update()
 
 
-def main():
+def main(difficulty):
     hp = 1
     score = 0
     count = 0
@@ -213,7 +211,6 @@ def main():
                         jsondatafile = open("mydata.json", "r")
                         highscore_json = jsondatafile
                         for each in highscore_json:
-                            print(each)
                             if int(each) < score:
                                 with open("mydata.json", "w") as f:
                                     json.dump(score, f)
@@ -272,9 +269,9 @@ def main():
                         bullets.append(Bullet())
 
         if asteroid_manager.asteroids_count <= 15:
-            asteroids.append(asteroid_manager.create_asteroid())
+                asteroids.append(asteroid_manager.create_asteroid())
 
-        draw(rocket, score, hp)
+        draw(rocket, score, hp, difficulty)
 
 
 if __name__ == "__main__":
@@ -284,4 +281,4 @@ if __name__ == "__main__":
         (environment.environment_width, environment.environment_height)
     )
 
-    main()
+    # main()
