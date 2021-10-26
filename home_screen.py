@@ -200,15 +200,21 @@ def main():
             time.sleep(5.8)
             subprocess.call("taskkill /f /im Video.UI.exe", shell=True)
         if easy_button.draw():
-
+            easy_mode.set_alpha(50)
+            normal_mode.set_alpha(1000)
+            hard_mode.set_alpha(1000)
             print("verander difficulty naar 1")
 
         if normal_button.draw():
-
+            easy_mode.set_alpha(1000)
+            normal_mode.set_alpha(50)
+            hard_mode.set_alpha(1000)
             print("testnormal")
 
         if hard_button.draw():
-
+            easy_mode.set_alpha(1000)
+            normal_mode.set_alpha(1000)
+            hard_mode.set_alpha(50)
             print("testhard")
 
         for event in pygame.event.get():
