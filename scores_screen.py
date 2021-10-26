@@ -3,6 +3,7 @@ import highscore_buttons
 import game
 import json
 
+
 # start game
 pygame.init()
 
@@ -16,6 +17,8 @@ background = pygame.image.load(os.path.join("assets/scores_bg.png"))
 background = pygame.transform.scale(background, (1280, 720))
 
 # load buttons
+update_score = pygame.image.load(os.path.join("assets/update_btn.png")).convert_alpha()
+update_score = pygame.transform.scale(update_score, (250, 80))
 retry = pygame.image.load(os.path.join("assets/retry_btn.png")).convert_alpha()
 retry = pygame.transform.scale(retry, (199, 60))
 quit_game = pygame.image.load(os.path.join("assets/quit_btn3.png"))
@@ -23,16 +26,19 @@ quit_game = pygame.transform.scale(quit_game, (199, 60))
 
 
 def check_for_new_highscore():
-    # read json file checken for new highscore
-    return
+    # read the json file
+    with open("mydata.json", "r") as jsondatafile:
+        highscore_json = jsondatafile.readlines()
+        for each in highscore_json:
+            print(each)
+
+    return each
 
 
-# # score display
-score = "Wat de functie leest en krijgt van de JSON file, dat moet hier komen."
-SCORE_FONT = pygame.font.SysFont("commicsans", 40)
-SCORE_FONT_ELSE = pygame.font.SysFont("commicsans", 60)
-score_text = SCORE_FONT_ELSE.render("Score: " + str(score), 1, (255, 255, 0))
-
+# score display
+score = check_for_new_highscore()
+SCORE_FONT = pygame.font.SysFont("commicsans", 80)
+score_text = SCORE_FONT.render("Score: " + str(score), 1, (255, 255, 255))
 
 # button class
 class Button:
@@ -68,6 +74,16 @@ retry_button = Button(window.get_width() / 1.35, retry.get_rect().height / 0.13,
 quit_button = Button(
     window.get_width() / 1.35, quit_game.get_rect().height / 0.11, quit_game
 )
+update_button = Button(
+    window.get_width() / 3.15, update_score.get_rect().height / 0.30, update_score
+)
+
+
+def show_score():
+    SCORE_FONT = pygame.font.SysFont("commicsans", 120)
+    # score_text = SCORE_FONT.render("Score: " + str(score), 1, (255, 255, 255))
+    # window.blit(score_text, (width / 2 - score_text.get_width() - 10, 300))
+
 
 # game loop
 def main():
@@ -76,13 +92,20 @@ def main():
     while running:
         # drawing images on screen
         window.blit(background, (0, 0))
-        window.blit(score_text, (0, 0))
-        # update highscore when 'game_over == True'
+        # window.blit(score_text, (0, 0))
+        # score_text.set_alpha(0)
 
         # set buttons
         if retry_button.draw():
             game.main()
             print("retry clicked")
+        if show_score():
+            score = check_for_new_highscore()
+        if update_button.draw():
+            print("update clicked")
+            score = check_for_new_highscore()
+            show_score()
+            window.blit(score_text, (width / 2 - score_text.get_width(), 350))
         if quit_button.draw():
             running = False
             print("quit clicked")
@@ -96,16 +119,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# game variables, goes outside of the game loop
-# additional check, does the score.txt file exists?
-# if os.path.exists('scores.txt', 'r') as file:
-#     # load in the file
-#     with open('scores.txt', 'r') as file:
-#         high_score = int(file.read())
-
-# # # update highscore when 'game_over == True'
-# if score > high_score:
-#     high_score = score
-#     with open("score.txt", "w") as file:
-#         file.write(str(highscore))
