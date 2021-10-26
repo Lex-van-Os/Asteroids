@@ -170,7 +170,7 @@ def draw(rocket, score, hp, difficulty):
 
 
 def main(difficulty):
-    hp = 1
+    hp = 3
     score = 0
     count = 0
     clock = pygame.time.Clock()
@@ -222,7 +222,7 @@ def main(difficulty):
                                 with open("mydata.json", "w") as file:
                                     json.dump(score, file)
 
-                    rocket.destroyRocket()
+                        rocket.destroyRocket()
 
             # Bullet collison with astroids
             for bullet in bullets:
