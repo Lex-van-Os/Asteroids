@@ -3,9 +3,9 @@ from rocket import Rocket
 from asteroid import Asteroid
 from environment import Environment
 from asteroid_manager import AsteroidManager
-from omgeving import highscore_button, retry_button, close_button
-from omgeving import highscore_width, retry_width, close_width
-from omgeving import highscore_length, retry_length, close_length
+from game_over import highscore_button, retry_button, close_button
+from game_over import highscore_width, retry_width, close_width
+from game_over import highscore_length, retry_length, close_length
 from rocket import playerRocket
 
 from pygame import mixer
