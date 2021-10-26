@@ -274,7 +274,7 @@ def main(difficulty):
                         )
                         # Score plus 1
                         score += 1
-                         # Add a explosion effect and sound effect
+                        # Add a explosion effect and sound effect
                         explosion_sound.play()
 
         # Movement
