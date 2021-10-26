@@ -84,7 +84,6 @@ bullets = []
 # Define asteroids list for storing newly created asteroids
 asteroids = []
 
-
 def draw(rocket, score, hp):
     # Lijst van asteroides wordt meegegeven, waardoorheen geloopt wordt, om ze allemaal te laten bewegen
     win.blit(backGround, (0, 0))
@@ -95,6 +94,7 @@ def draw(rocket, score, hp):
             asteroids.pop(asteroids.index(asteroid))
             asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
 
+    # Draw bullets on screen
     for bullet in bullets:
         bullet.draw(win)
 
