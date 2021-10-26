@@ -150,7 +150,7 @@ def draw(rocket, score, hp):
 
     pygame.display.update()
 
-
+def main():
     # Variables
     hp = 3
     score = 0
