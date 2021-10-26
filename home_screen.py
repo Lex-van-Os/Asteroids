@@ -204,12 +204,21 @@ def main():
             subprocess.call("taskkill /f /im Video.UI.exe", shell=True)
         if easy_button.draw():
             difficulty = 2
+            easy_mode.set_alpha(50)
+            normal_mode.set_alpha(1000)
+            hard_mode.set_alpha(1000)
 
         if normal_button.draw():
             difficulty = 1
+            easy_mode.set_alpha(1000) 
+            normal_mode.set_alpha(50)
+            hard_mode.set_alpha(1000)
 
         if hard_button.draw():
             difficulty = 0
+            easy_mode.set_alpha(1000)
+            normal_mode.set_alpha(1000)
+            hard_mode.set_alpha(50)
 
         for event in pygame.event.get():
             #
