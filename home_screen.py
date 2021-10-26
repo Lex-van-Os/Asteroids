@@ -168,6 +168,9 @@ def main():
     # game loop "running proces van de game"
     running = True
 
+    # Variabel voor de difficulty van de game. Staat standaard op normal (1)
+    difficulty = 1
+
     while running:
 
         # Background, titel, nilesh, doge, gordon putting them in the screen...
@@ -190,7 +193,7 @@ def main():
             print("testqulian")
         if start_button.draw():
             print("start clicked")
-            game.main()
+            game.main(difficulty)
         if highscore_button.draw():
             print("high score clicked")
         if quit_button.draw():
@@ -200,16 +203,22 @@ def main():
             time.sleep(5.8)
             subprocess.call("taskkill /f /im Video.UI.exe", shell=True)
         if easy_button.draw():
-
-            print("verander difficulty naar 1")
+            difficulty = 2
+            easy_mode.set_alpha(50)
+            normal_mode.set_alpha(1000)
+            hard_mode.set_alpha(1000)
 
         if normal_button.draw():
-
-            print("testnormal")
+            difficulty = 1
+            easy_mode.set_alpha(1000) 
+            normal_mode.set_alpha(50)
+            hard_mode.set_alpha(1000)
 
         if hard_button.draw():
-
-            print("testhard")
+            difficulty = 0
+            easy_mode.set_alpha(1000)
+            normal_mode.set_alpha(1000)
+            hard_mode.set_alpha(50)
 
         for event in pygame.event.get():
             #
