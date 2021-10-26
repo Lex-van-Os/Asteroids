@@ -1,19 +1,7 @@
 import pygame, os, random, math
 from environment import Environment
 
-
-ASTEROID_LARGE_IMG = pygame.image.load(os.path.join('assets/', 'asteroid_large.png'))
-ASTEROID_MEDIUM_IMG = pygame.image.load(os.path.join('assets/', 'asteroid_medium.png'))
-ASTEROID_SMALL_IMG = pygame.image.load(os.path.join('assets/', 'asteroid_small.png'))
-ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 75, 75
-ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 50, 50
-ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 40, 40
-ASTEROID_LARGE = pygame.transform.scale(ASTEROID_LARGE_IMG, (ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT))
-ASTEROID_MEDIUM = pygame.transform.scale(ASTEROID_MEDIUM_IMG, (ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT))
-ASTEROID_SMALL = pygame.transform.scale(ASTEROID_SMALL_IMG, (ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT))
-
 class Asteroid(pygame.Rect):
-    speed_delay_count = 0 # Speed delay count, voor vergelijking aan speed_delay variabel
 
     def __init__(self, size, speed, image, width, height, start_placement, end_placement, pre_defined_x=None, pre_defined_y=None):
         self.asteroid_size = size
@@ -25,7 +13,7 @@ class Asteroid(pygame.Rect):
         self.end_placement = end_placement
         self.pre_defined_x = pre_defined_x
         self.pre_defined_y = pre_defined_y
-        self.speed_delay = 1 # Variabel voor delay in bewegen, staat gelijk aan difficulty. Hogere delay = meer delay in move functie
+        self.speed_delay = 0
 
         self.angle = 0 # Rotation voor het rotaten, begint bij 0. Wordt nog niet gebruikt ivm nog niet complete functionaliteit
         self.rotation = pygame.transform.rotate(self.asteroid_image, self.angle)
@@ -35,28 +23,20 @@ class Asteroid(pygame.Rect):
         # Definen van start en eind coördinaten voor random inladen
         self.define_starting_coords()
         self.define_target_coords()
-        # # Print statements voor het testen van asteroide pad
-        # print(self.start_placement + " X: " + str(self.x_coords) + " Y: " + str(self.y_coords))
-        # print(self.end_placement + " X: " + str(self.target_x) + " Y: " + str(self.target_y))
         super().__init__(self.x_coords, self.y_coords, width, height)
 
 
     # Draw asteroid makes use of speed_delay and speed_delay_count to define the speed of asteroids
     # Asteroids only move when speed_delay_count is 0. Else the count gets incremented and reset based on speed_delay value
     # The higher speed delay, the slower asteroids move
-    def draw_asteroid(self, WIN):
-        if self.speed_delay_count == 0:
-            self.rotate_asteroid()
-            self.move_asteroid()
-            if self.speed_delay != 0:
-                self.speed_delay_count += 1
-        elif self.speed_delay_count == self.speed_delay:
-            self.speed_delay_count = 0
-        else:
-            self.speed_delay_count += 1
-        WIN.blit(self.rotation, self.rotationRect)
+    def place_asteroid(self):
+        self.rotate_asteroid()
+        self.move_asteroid()
 
         # pygame.display.update()
+
+    def draw_asteroid(self, win):
+        win.blit(self.rotation, self.rotationRect)
 
 
     # Defineren van starting coördinaten. Gaat doormiddel van kijken waarvandaan de asteroide komt, om zo de deels vastgestelde coords te bepalen
@@ -82,7 +62,6 @@ class Asteroid(pygame.Rect):
                 self.x_coords = self.pre_defined_x
                 self.y_coords = self.pre_defined_y
             else:
-                print("Couldn't find pre defined x and y coords")
                 self.x_coords = 0
                 self.y_coords = 0
 
