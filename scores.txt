@@ -1,0 +1,1 @@
+Score file to read and write the new scores and load it to the windows

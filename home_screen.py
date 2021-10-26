@@ -35,6 +35,14 @@ highscore = pygame.image.load(os.path.join("assets", "high_score.png")).convert_
 highscore = pygame.transform.scale(highscore, (199, 50))
 stop_game = pygame.image.load(os.path.join("assets", "quit_game.png")).convert_alpha()
 stop_game = pygame.transform.scale(stop_game, (199, 50))
+easy_mode = pygame.image.load(os.path.join("assets", "easy_mode.png")).convert_alpha()
+easy_mode = pygame.transform.scale(easy_mode, (199, 50))
+normal_mode = pygame.image.load(
+    os.path.join("assets", "normal_mode.png")
+).convert_alpha()
+normal_mode = pygame.transform.scale(normal_mode, (199, 50))
+hard_mode = pygame.image.load(os.path.join("assets", "hard_mode.png")).convert_alpha()
+hard_mode = pygame.transform.scale(hard_mode, (199, 50))
 
 # Linkedin pages
 # Nilesh Linkedin
@@ -124,6 +132,15 @@ highscore_button = Button(
 quit_button = Button(
     screen.get_width() / 2.35, start.get_rect().height / 0.12, stop_game
 )
+easy_button = Button(
+    screen.get_width() / 2.35, start.get_rect().height / 0.10, easy_mode
+)
+normal_button = Button(
+    screen.get_width() / 2.9, start.get_rect().height / 0.09, normal_mode
+)
+hard_button = Button(
+    screen.get_width() / 1.98, start.get_rect().height / 0.09, hard_mode
+)
 
 # Linkedin Buttons
 Nileshlink_button = Button(
@@ -142,8 +159,9 @@ qulianLink = Button(
     screen.get_width() / 25, start.get_rect().height / 0.178, qulian_linkedin_page
 )
 # Create Background sound
-mixer.music.load(os.path.join("assets", "chris.mp3"))
-mixer.music.play(-1)
+pygame.mixer.init()
+# pygame.mixer.music.load(os.path.join("assets", "masterchief.mp3"))
+# pygame.mixer.music.play()
 
 
 def main():
@@ -165,7 +183,7 @@ def main():
         if lexLink_button.draw():
             webbrowser.open("https://www.linkedin.com/in/lex-van-os-a2b012198/")
         if babsLink_button.draw():
-            print("testbabs")
+            webbrowser.open("https://www.linkedin.com/in/babette-van-aubel-b35386190/")
         if chrisLink_button.draw():
             webbrowser.open("https://www.linkedin.com/in/chris-gerritsen-5b252217b/")
         if qulianLink.draw():
@@ -181,6 +199,18 @@ def main():
             os.startfile(os.path.join("assets", "Tyeffect4k.mp4"))
             time.sleep(5.8)
             subprocess.call("taskkill /f /im Video.UI.exe", shell=True)
+        if easy_button.draw():
+
+            print("verander difficulty naar 1")
+
+        if normal_button.draw():
+
+            print("testnormal")
+
+        if hard_button.draw():
+
+            print("testhard")
+
         for event in pygame.event.get():
             #
             pygame.display.update()
