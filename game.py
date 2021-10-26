@@ -95,8 +95,8 @@ def draw(rocket, score, hp):
             asteroids.pop(asteroids.index(asteroid))
             asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
 
-    for b in bullets:
-        b.draw(win)
+    for bullet in bullets:
+        bullet.draw(win)
 
     if hp >= 1:
         score_text = SCORE_FONT.render("SCORE: " + str(score), 1, (255, 255, 0))
@@ -180,30 +180,30 @@ def main():
         count += 1
 
         rocket.updateLocation()
-        for b in bullets:
-            b.move()
-            if b.checkOffScreen():
-                bullets.pop(bullets.index(b))
+        for bullet in bullets:
+            bullet.move()
+            if bullet.checkOffScreen():
+                bullets.pop(bullets.index(bullet))
 
         # Rocket collision with astroids
-        for a in asteroids:
+        for asteroid in asteroids:
             # Calculate if rocket has same position as astroid
             if (
-                a.x >= rocket.xAxis - rocket.widthRocket // 2
-                and a.x <= rocket.xAxis + rocket.widthRocket // 2
+                asteroid.x >= rocket.xAxis - rocket.widthRocket // 2
+                and asteroid.x <= rocket.xAxis + rocket.widthRocket // 2
             ) or (
-                a.x + a.w <= rocket.xAxis + rocket.widthRocket // 2
-                and a.x + a.w >= rocket.xAxis - rocket.widthRocket // 2
+                asteroid.x + asteroid.w <= rocket.xAxis + rocket.widthRocket // 2
+                and asteroid.x + asteroid.w >= rocket.xAxis - rocket.widthRocket // 2
             ):
                 if (
-                    a.y >= rocket.yAxis - rocket.heightRocket // 2
-                    and a.y <= rocket.yAxis + rocket.heightRocket // 2
+                    asteroid.y >= rocket.yAxis - rocket.heightRocket // 2
+                    and asteroid.y <= rocket.yAxis + rocket.heightRocket // 2
                 ) or (
-                    a.y + a.h >= rocket.yAxis - rocket.heightRocket // 2
-                    and a.y + a.h <= rocket.yAxis + rocket.heightRocket // 2
+                    asteroid.y + asteroid.h >= rocket.yAxis - rocket.heightRocket // 2
+                    and asteroid.y + asteroid.h <= rocket.yAxis + rocket.heightRocket // 2
                 ):
                     # Delete the astroid and rocket
-                    asteroids.pop(asteroids.index(a))
+                    asteroids.pop(asteroids.index(asteroid))
                     asteroid_manager.asteroids_count = (
                         asteroid_manager.asteroids_count - 1
                     )
@@ -221,31 +221,31 @@ def main():
                     rocket.destroyRocket()
 
             # Bullet collison with astroids
-            for b in bullets:
+            for bullet in bullets:
                 # Calculate if bullet has same position as astroid
                 if (
-                    (b.xAxis >= a.x and b.xAxis <= a.x + a.w)
-                    or b.xAxis + b.widthBullet >= a.x
-                    and b.xAxis + b.widthBullet <= a.x + a.w
+                    (bullet.xAxis >= asteroid.x and bullet.xAxis <= asteroid.x + asteroid.w)
+                    or bullet.xAxis + bullet.widthBullet >= asteroid.x
+                    and bullet.xAxis + bullet.widthBullet <= asteroid.x + asteroid.w
                 ):
                     if (
-                        (b.yAxis >= a.y and b.yAxis <= a.y + a.h)
-                        or b.yAxis + b.heightBullet >= a.y
-                        and b.yAxis + b.heightBullet <= a.y + a.h
+                        (bullet.yAxis >= asteroid.y and bullet.yAxis <= asteroid.y + asteroid.h)
+                        or bullet.yAxis + bullet.heightBullet >= asteroid.y
+                        and bullet.yAxis + bullet.heightBullet <= asteroid.y + asteroid.h
                     ):
                         # Delete the bullet
-                        bullets.pop(bullets.index(b))
+                        bullets.pop(bullets.index(bullet))
                         # Splitting of the asteroid in case of size large or medium
-                        if a.asteroid_size == "l":
+                        if asteroid.asteroid_size == "l":
                             asteroids.extend(
-                                asteroid_manager.split_l_asteroid(a.x, a.y)
+                                asteroid_manager.split_l_asteroid(asteroid.x, asteroid.y)
                             )
-                        elif a.asteroid_size == "m":
+                        elif asteroid.asteroid_size == "m":
                             asteroids.extend(
-                                asteroid_manager.split_m_asteroid(a.x, a.y)
+                                asteroid_manager.split_m_asteroid(asteroid.x, asteroid.y)
                             )
                         # Delete the astroid
-                        asteroids.pop(asteroids.index(a))
+                        asteroids.pop(asteroids.index(asteroid))
                         asteroid_manager.asteroids_count = (
                             asteroid_manager.asteroids_count - 1
                         )

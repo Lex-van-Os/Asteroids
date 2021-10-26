@@ -206,7 +206,7 @@ def main():
             print("verander difficulty naar 1")
 
         if normal_button.draw():
-            easy_mode.set_alpha(1000)
+            easy_mode.set_alpha(1000) 
             normal_mode.set_alpha(50)
             hard_mode.set_alpha(1000)
             print("testnormal")
