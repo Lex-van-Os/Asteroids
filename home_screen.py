@@ -5,6 +5,7 @@ from pygame import mixer
 import time
 import subprocess
 import game
+import rocket
 
 # Start game en icon aanmaken voor de applicatie plus een caption
 pygame.init()
@@ -41,6 +42,7 @@ normal_mode = pygame.image.load(
     os.path.join("assets", "normal_mode.png")
 ).convert_alpha()
 normal_mode = pygame.transform.scale(normal_mode, (199, 50))
+normal_mode.set_alpha(50)
 hard_mode = pygame.image.load(os.path.join("assets", "hard_mode.png")).convert_alpha()
 hard_mode = pygame.transform.scale(hard_mode, (199, 50))
 
@@ -192,6 +194,7 @@ def main():
         if qulianLink.draw():
             print("testqulian")
         if start_button.draw():
+            rocket.playerRocket.set_alpha(1000)
             print("start clicked")
             game.main(difficulty)
         if highscore_button.draw():
@@ -199,6 +202,7 @@ def main():
         if quit_button.draw():
             running = False
             print("quit clicked")
+            pygame.quit()
             os.startfile(os.path.join("assets", "Tyeffect4k.mp4"))
             time.sleep(5.8)
             subprocess.call("taskkill /f /im Video.UI.exe", shell=True)
