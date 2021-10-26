@@ -13,6 +13,7 @@ from omgeving import retry_length
 from omgeving import close_width
 from omgeving import close_length
 from rocket import playerRocket
+import scores_screen
 import json
 
 from pygame import mixer
@@ -30,7 +31,7 @@ pygame.font.init()
 width, height = 1280, 720
 backGround = pygame.image.load(os.path.join("assets", "background.png"))
 backGround = pygame.transform.scale(backGround, (1280, 720))
-shoot = pygame.mixer.Sound(f".\\" + os.path.join("assets", "Gun+Silencer.mp3"))
+shoot = pygame.mixer.Sound(os.path.join("assets", "Gun+Silencer.mp3"))
 # shoot = pygame.mixer.Sound(os.path.join('assets', 'hanghang69.mp3'))
 
 pygame.display.set_caption("Asteroids")
@@ -125,6 +126,8 @@ def draw(rocket, score, hp):
                 # print("highscore")
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
+                        scores_screen.check_for_new_highscore()
+                        scores_screen.main()
                         print("highscore pressed")
 
             else:
@@ -156,8 +159,8 @@ def draw(rocket, score, hp):
                 # print("close")
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     print("closed pressed")
-                    pygame.quit
-                    quit()
+                    scores_screen.check_for_new_highscore()
+
             else:
                 close_button.set_alpha(1000)
 
@@ -215,8 +218,8 @@ def main():
                         for each in highscore_json:
                             print(each)
                             if int(each) < score:
-                                with open("mydata.json", "w") as f:
-                                    json.dump(score, f)
+                                with open("mydata.json", "w") as file:
+                                    json.dump(score, file)
 
                     rocket.destroyRocket()
 
