@@ -24,6 +24,7 @@ backGround = pygame.image.load(os.path.join('assets', 'background.png'))
 backGround = pygame.transform.scale(backGround, (1280, 720))
 shoot = pygame.mixer.Sound(f'.\\' + os.path.join('assets', 'Gun+Silencer.mp3'))
 explosion_sound = pygame.mixer.Sound(f'.\\' + os.path.join('assets', 'explosion_sound.wav'))
+idiot_sandwich = pygame.mixer.Sound('assets/Idiot_Sandwich.mp3')
 # shoot = pygame.mixer.Sound(os.path.join('assets', 'hanghang69.mp3'))
 
 pygame.display.set_caption('Asteroids')
@@ -98,7 +99,8 @@ def draw(rocket, score, hp):
         win.blit(highscore_button, ( width / 2 - highscore_width / 2 , 400))
         win.blit(retry_button, ( width / 2 - retry_width / 2 , 300))
         win.blit(close_button, ( width / 2 - close_width / 2 , 500))
-        
+        #idiot_sandwich.play()
+
         # interactive buttons
         mouse = pygame.mouse.get_pos()
         #print(click)
