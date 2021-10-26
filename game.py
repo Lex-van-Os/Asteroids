@@ -106,40 +106,49 @@ def draw(rocket, score, hp):
         #highscore button darkener cords: 520 to 760 and 400 to 475
         for event in pygame.event.get():
             if 520 + highscore_width > mouse[0] > 520 and 400 + highscore_length > mouse[1] >400:
-                highscore_button.set_alpha(50)
+                highscore_button.set_alpha(50) # Makes the highscore button darker
                 #print("highscore")
+                # So we know it works
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         print("highscore pressed")
+                        # So we know it works
                 
             else:
-                highscore_button.set_alpha(1000)
+                highscore_button.set_alpha(1000) # when mouse not over it goes back to normal
             
             #retry button darkener cords: 520 to 760 and 300 to 375
             if 520 + retry_width > mouse[0] > 520 and 300 + retry_length > mouse[1] > 300:
-                retry_button.set_alpha(50)
+                retry_button.set_alpha(50) # Makes the retry button darker
                 #print("retry")
+                # So we know it works
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     # print("retry pressed")
+                    # So we know it works
                     asteroid_manager.asteroids_count = 0
                     asteroids.clear()
+                    # Resets asteroids
                     playerRocket.set_alpha(1000)
                     main()
+                    # Makes the rocked visible again 
                    
             else:
-                retry_button.set_alpha(1000)
+                retry_button.set_alpha(1000) # when mouse not over it goes back to normal
             
             #close button darkener cords: 520 to 760 and 500 to 575
             if 520 + close_width > mouse[0] > 520 and 500 + close_length > mouse[1] > 500:
-                close_button.set_alpha(50)
+                close_button.set_alpha(50) # Makes the close button darker 
                 #print("close")
+                # So we know it works
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     #print("closed pressed")
+                    # So we know it works
                     pygame.quit()
                     quit
+                    #quits python when left clicked
 
             else:
-                close_button.set_alpha(1000)
+                close_button.set_alpha(1000) # when mouse not over it goes back to normal
 
 
     pygame.display.update()
