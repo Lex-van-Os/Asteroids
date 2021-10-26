@@ -275,8 +275,8 @@ def main(difficulty):
                         )
                         # Score plus 1
                         score += 1
-                         # Add a explosion effect and sound effect
-                            explosion_sound.play()
+                        # Add a explosion effect and sound effect
+                        explosion_sound.play()
 
         # Movement
         keys = pygame.key.get_pressed()
