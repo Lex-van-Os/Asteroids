@@ -100,8 +100,8 @@ def draw(rocket, score, hp, difficulty):
             asteroid.speed_delay += 1
         if asteroid.check_position():
             asteroids.pop(asteroids.index(asteroid))
-            asteroid_manager.asteroids_count = asteroid_manager.asteroids_count
-            asteroid.draw_asteroid(win)
+            asteroid_manager.asteroids_count = asteroid_manager.asteroids_count - 1
+        asteroid.draw_asteroid(win)
 
     # Draw bullets on screen
     for bullet in bullets:
