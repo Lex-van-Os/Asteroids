@@ -3,7 +3,6 @@ from rocket import Rocket
 from asteroid import Asteroid
 from environment import Environment
 from asteroid_manager import AsteroidManager
-from omgeving import highscore_button
 from omgeving import retry_button
 from omgeving import close_button
 from omgeving import highscore_width
@@ -15,7 +14,7 @@ from omgeving import close_length
 from rocket import playerRocket
 import scores_screen
 import json
-
+import home_screen
 from pygame import mixer
 import os
 
@@ -93,8 +92,8 @@ def draw(rocket, score, hp, difficulty):
     rocket.draw(win)
     for asteroid in asteroids:
         if asteroid.speed_delay == difficulty:
-                asteroid.place_asteroid()
-                asteroid.speed_delay = 0
+            asteroid.place_asteroid()
+            asteroid.speed_delay = 0
         else:
             asteroid.speed_delay += 1
         if asteroid.check_position():
@@ -130,7 +129,6 @@ def draw(rocket, score, hp, difficulty):
                 highscore_button.set_alpha(50)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
-                        scores_screen.check_for_new_highscore()
                         scores_screen.main()
                         print("highscore pressed")
 
@@ -160,13 +158,9 @@ def draw(rocket, score, hp, difficulty):
                 close_button.set_alpha(50)
                 if event.type == pygame.MOUSEBUTTONDOWN:
 
+                    home_screen.main()
                     print("closed pressed")
-                    scores_screen.check_for_new_highscore()
 
-
-                    pygame.quit
-                    quit()
-    
             else:
                 close_button.set_alpha(1000)
 
@@ -209,7 +203,8 @@ def main(difficulty):
                     and asteroid.y <= rocket.yAxis + rocket.heightRocket // 2
                 ) or (
                     asteroid.y + asteroid.h >= rocket.yAxis - rocket.heightRocket // 2
-                    and asteroid.y + asteroid.h <= rocket.yAxis + rocket.heightRocket // 2
+                    and asteroid.y + asteroid.h
+                    <= rocket.yAxis + rocket.heightRocket // 2
                 ):
                     # Delete the astroid and rocket
                     asteroids.pop(asteroids.index(asteroid))
@@ -232,25 +227,36 @@ def main(difficulty):
             for bullet in bullets:
                 # Calculate if bullet has same position as astroid
                 if (
-                    (bullet.xAxis >= asteroid.x and bullet.xAxis <= asteroid.x + asteroid.w)
+                    (
+                        bullet.xAxis >= asteroid.x
+                        and bullet.xAxis <= asteroid.x + asteroid.w
+                    )
                     or bullet.xAxis + bullet.widthBullet >= asteroid.x
                     and bullet.xAxis + bullet.widthBullet <= asteroid.x + asteroid.w
                 ):
                     if (
-                        (bullet.yAxis >= asteroid.y and bullet.yAxis <= asteroid.y + asteroid.h)
+                        (
+                            bullet.yAxis >= asteroid.y
+                            and bullet.yAxis <= asteroid.y + asteroid.h
+                        )
                         or bullet.yAxis + bullet.heightBullet >= asteroid.y
-                        and bullet.yAxis + bullet.heightBullet <= asteroid.y + asteroid.h
+                        and bullet.yAxis + bullet.heightBullet
+                        <= asteroid.y + asteroid.h
                     ):
                         # Delete the bullet
                         bullets.pop(bullets.index(bullet))
                         # Splitting of the asteroid in case of size large or medium
                         if asteroid.asteroid_size == "l":
                             asteroids.extend(
-                                asteroid_manager.split_l_asteroid(asteroid.x, asteroid.y)
+                                asteroid_manager.split_l_asteroid(
+                                    asteroid.x, asteroid.y
+                                )
                             )
                         elif asteroid.asteroid_size == "m":
                             asteroids.extend(
-                                asteroid_manager.split_m_asteroid(asteroid.x, asteroid.y)
+                                asteroid_manager.split_m_asteroid(
+                                    asteroid.x, asteroid.y
+                                )
                             )
                         # Delete the astroid
                         asteroids.pop(asteroids.index(asteroid))
@@ -280,7 +286,7 @@ def main(difficulty):
                         bullets.append(Bullet())
 
         if asteroid_manager.asteroids_count <= 15:
-                asteroids.append(asteroid_manager.create_asteroid())
+            asteroids.append(asteroid_manager.create_asteroid())
 
         draw(rocket, score, hp, difficulty)
 
