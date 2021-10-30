@@ -22,7 +22,7 @@ class Rocket(object):
         self.angle = 0
         self.rotation = pygame.transform.rotate(self.img, self.angle) # Rotate the rocket
         self.rotationRect = self.rotation.get_rect()
-        self.rotationRect.center = (self.xAxis, self.yAxis) # Rotate rocket around his center
+        self.rotationRect.center = (self.xAxis, self.yAxis) # Set the rocket to the center of the screen
         # Calculate with direction the rocket is facing
         self.cosine = math.cos(math.radians(self.angle + 90))
         self.sine = math.sin(math.radians(self.angle + 90))

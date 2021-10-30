@@ -11,26 +11,36 @@ from omgeving import retry_width
 from omgeving import retry_length
 from omgeving import close_width
 from omgeving import close_length
+from game_over import highscore_button, retry_button, close_button
+from game_over import highscore_width, retry_width, close_width
+from game_over import highscore_length, retry_length, close_length
 from rocket import playerRocket
 import scores_screen
 import json
 import home_screen
+
 from pygame import mixer
 import os
 
 pygame.init()
+pygame.font.init()
 width, height = 1280, 720
 
 # Environment for pre-defined width and height
 environment = Environment()
 asteroid_manager = AsteroidManager()
 
-pygame.font.init()
-
 width, height = 1280, 720
 backGround = pygame.image.load(os.path.join("assets", "background.png"))
 backGround = pygame.transform.scale(backGround, (1280, 720))
+
+shoot = pygame.mixer.Sound(f".\\" + os.path.join("assets", "Gun+Silencer.mp3"))
+explosion_sound = pygame.mixer.Sound(
+    f".\\" + os.path.join("assets", "explosion_sound.wav")
+)
+idiot_sandwich = pygame.mixer.Sound("assets/Idiot_Sandwich.mp3")
 shoot = pygame.mixer.Sound(os.path.join("assets", "Gun+Silencer.mp3"))
+
 # shoot = pygame.mixer.Sound(os.path.join('assets', 'hanghang69.mp3'))
 
 pygame.display.set_caption("Asteroids")
@@ -38,10 +48,12 @@ win = pygame.display.set_mode((width, height))
 
 FPS = 60
 
+
+# Score and Game Over titles fonts
 SCORE_FONT = pygame.font.SysFont("commicsans", 40)
 SCORE_FONT_ELSE = pygame.font.SysFont("commicsans", 60)
 GAME_OVER = pygame.font.SysFont("comicsans", 100)
-
+# asteroids perameters
 ASTEROID_L_WIDTH, ASTEROID_L_HEIGHT = 50, 50
 ASTEROID_M_WIDTH, ASTEROID_M_HEIGHT = 35, 35
 ASTEROID_S_WIDTH, ASTEROID_S_HEIGHT = 20, 20
@@ -105,6 +117,7 @@ def draw(rocket, score, hp, difficulty):
     for bullet in bullets:
         bullet.draw(win)
 
+    # Score and game over screens render
     if hp >= 1:
         score_text = SCORE_FONT.render("SCORE: " + str(score), 1, (255, 255, 0))
         hp_text = SCORE_FONT.render("HP: " + str(hp), 1, (255, 255, 0))
@@ -112,6 +125,16 @@ def draw(rocket, score, hp, difficulty):
         win.blit(hp_text, (width - score_text.get_width() - 100, 10))
     elif hp <= 0:
         score_text = SCORE_FONT_ELSE.render("score: " + str(score), 1, (255, 255, 0))
+
+        win.blit(score_text, (width / 2 - 75, 200))
+        game_over_text = GAME_OVER.render("game over", 1, (255, 0, 0))
+        win.blit(game_over_text, (width / 2 - 200, 75))
+        win.blit(highscore_button, (width / 2 - highscore_width / 2, 400))
+        win.blit(retry_button, (width / 2 - retry_width / 2, 300))
+        win.blit(close_button, (width / 2 - close_width / 2, 500))
+        # idiot_sandwich.play()
+
+        # interactive buttons
         win.blit(score_text, (width / 2 - 75, 200))
         game_over_text = GAME_OVER.render("game over", 1, (255, 0, 0))
         win.blit(game_over_text, (width / 2 - 200, 75))
@@ -122,53 +145,73 @@ def draw(rocket, score, hp, difficulty):
         mouse = pygame.mouse.get_pos()
         # highscore button darkener cords: 520 to 760 and 400 to 475
         for event in pygame.event.get():
+
             if (
                 520 + highscore_width > mouse[0] > 520
                 and 400 + highscore_length > mouse[1] > 400
             ):
-                highscore_button.set_alpha(50)
+                highscore_button.set_alpha(50)  # Makes the highscore button darker
+                # print("highscore")
+                # So we know it works
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         scores_screen.main()
                         print("highscore pressed")
+                        # So we know it works
 
             else:
-                highscore_button.set_alpha(1000)
+                highscore_button.set_alpha(
+                    1000
+                )  # when mouse not over it goes back to normal
 
             # retry button darkener cords: 520 to 760 and 300 to 375
             if (
                 520 + retry_width > mouse[0] > 520
                 and 300 + retry_length > mouse[1] > 300
             ):
-                retry_button.set_alpha(50)
+                retry_button.set_alpha(50)  # Makes the retry button darker
+                # print("retry")
+                # So we know it works
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    # print("retry pressed")
+                    # So we know it works
+
                     asteroid_manager.asteroids_count = 0
                     asteroids.clear()
+                    # Resets asteroids
                     playerRocket.set_alpha(1000)
-                    main(difficulty)
+                    main()
+                    # Makes the rocked visible again
 
             else:
-                retry_button.set_alpha(1000)
+                retry_button.set_alpha(
+                    1000
+                )  # when mouse not over it goes back to normal
 
             # close button darkener cords: 520 to 760 and 500 to 575
             if (
                 520 + close_width > mouse[0] > 520
                 and 500 + close_length > mouse[1] > 500
             ):
-                close_button.set_alpha(50)
+                close_button.set_alpha(50)  # Makes the close button darker
+                # print("close")
+                # So we know it works
                 if event.type == pygame.MOUSEBUTTONDOWN:
 
                     home_screen.main()
                     print("closed pressed")
 
             else:
-                close_button.set_alpha(1000)
+                close_button.set_alpha(
+                    1000
+                )  # when mouse not over it goes back to normal
 
     pygame.display.update()
 
 
 def main(difficulty):
-    hp = 1
+    hp = 3
     score = 0
     count = 0
     clock = pygame.time.Clock()
@@ -221,11 +264,12 @@ def main(difficulty):
                                 with open("mydata.json", "w") as file:
                                     json.dump(score, file)
 
-                    rocket.destroyRocket()
+                        rocket.destroyRocket()
 
             # Bullet collison with astroids
             for bullet in bullets:
                 # Calculate if bullet has same position as astroid
+
                 if (
                     (
                         bullet.xAxis >= asteroid.x
@@ -265,7 +309,10 @@ def main(difficulty):
                         )
                         # Score plus 1
                         score += 1
+                        # Add a explosion effect and sound effect
+                        explosion_sound.play()
 
+        # Movement
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
             rocket.moveForward()
@@ -276,15 +323,19 @@ def main(difficulty):
 
         rocket.autoMove()
 
+        # Quiting
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+            # Shooting
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     if hp >= 1:
                         shoot.play()
                         bullets.append(Bullet())
 
+        # Astroids spawning
         if asteroid_manager.asteroids_count <= 15:
             asteroids.append(asteroid_manager.create_asteroid())
 
