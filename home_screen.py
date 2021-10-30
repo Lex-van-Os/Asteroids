@@ -195,7 +195,6 @@ def main():
         if qulianLink.draw():
             print("testqulian")
         if start_button.draw():
-            rocket.playerRocket.set_alpha(1000)
             game.main(difficulty)
         if highscore_button.draw():
             scores_screen.main()
