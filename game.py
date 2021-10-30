@@ -161,11 +161,8 @@ def draw(rocket, score, hp, difficulty):
                 retry_button.set_alpha(50)  # Makes the retry button darker
                 if event.type == pygame.MOUSEBUTTONDOWN:
 
-                    asteroid_manager.asteroids_count = 0
-                    asteroids.clear()
-                    rocket.reset_position()
+                    
                     # Resets asteroids
-                    playerRocket.set_alpha(1000)
                     main(difficulty)
                     # Makes the rocked visible again
 
@@ -202,6 +199,9 @@ def main(difficulty):
     clock = pygame.time.Clock()
     run = True
     playerRocket.set_alpha(1000)
+    asteroids.clear()
+    rocket.reset_position()
+    asteroid_manager.asteroids_count = 0
     # Added commented music logic to be turned on on specific occassions :)
     # mixer.music.load(os.path.join('', 'on_on.mp3'))
     # mixer.music.play()

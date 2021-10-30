@@ -2,7 +2,6 @@ import pygame, os
 import game
 import json
 import home_screen
-from rocket import playerRocket
 
 # start game
 pygame.init()
