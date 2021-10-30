@@ -141,6 +141,3 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 Oefening.py
-
-# mydata.json
-mydata.json
