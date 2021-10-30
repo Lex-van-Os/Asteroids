@@ -5,6 +5,7 @@ from pygame import mixer
 import time
 import subprocess
 import game
+import scores_screen
 import rocket
 
 # Start game en icon aanmaken voor de applicatie plus een caption
@@ -198,6 +199,7 @@ def main():
             print("start clicked")
             game.main(difficulty)
         if highscore_button.draw():
+            scores_screen.main()
             print("high score clicked")
         if quit_button.draw():
             running = False
@@ -214,7 +216,7 @@ def main():
 
         if normal_button.draw():
             difficulty = 1
-            easy_mode.set_alpha(1000) 
+            easy_mode.set_alpha(1000)
             normal_mode.set_alpha(50)
             hard_mode.set_alpha(1000)
 
