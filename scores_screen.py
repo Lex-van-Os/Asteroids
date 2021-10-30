@@ -88,7 +88,6 @@ def main():
         # set buttons
         if retry_button.draw():
             game.main(difficulty=1)
-            playerRocket.set_alpha(100)
         if quit_button.draw():
             home_screen.main()
         # event handler

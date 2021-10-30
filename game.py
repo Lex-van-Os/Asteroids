@@ -201,6 +201,7 @@ def main(difficulty):
     count = 0
     clock = pygame.time.Clock()
     run = True
+    playerRocket.set_alpha(1000)
     # Added commented music logic to be turned on on specific occassions :)
     # mixer.music.load(os.path.join('', 'on_on.mp3'))
     # mixer.music.play()
