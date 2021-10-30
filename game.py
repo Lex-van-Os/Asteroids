@@ -3,14 +3,6 @@ from rocket import Rocket
 from asteroid import Asteroid
 from environment import Environment
 from asteroid_manager import AsteroidManager
-from omgeving import retry_button
-from omgeving import close_button
-from omgeving import highscore_width
-from omgeving import highscore_length
-from omgeving import retry_width
-from omgeving import retry_length
-from omgeving import close_width
-from omgeving import close_length
 from game_over import highscore_button, retry_button, close_button
 from game_over import highscore_width, retry_width, close_width
 from game_over import highscore_length, retry_length, close_length
@@ -181,7 +173,7 @@ def draw(rocket, score, hp, difficulty):
                     asteroids.clear()
                     # Resets asteroids
                     playerRocket.set_alpha(1000)
-                    main()
+                    main(difficulty)
                     # Makes the rocked visible again
 
             else:
