@@ -89,10 +89,8 @@ def main():
         if retry_button.draw():
             game.main(difficulty=1)
             playerRocket.set_alpha(100)
-            print("retry clicked")
         if quit_button.draw():
             home_screen.main()
-            print("quit clicked")
         # event handler
         for event in pygame.event.get():
             # quit game

@@ -77,3 +77,8 @@ class Rocket(object):
 
     def destroyRocket(self):
         playerRocket.set_alpha(0)
+
+    
+    def reset_position(self):
+        self.xAxis = width//2
+        self.yAxis = height//2

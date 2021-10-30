@@ -196,14 +196,11 @@ def main():
             print("testqulian")
         if start_button.draw():
             rocket.playerRocket.set_alpha(1000)
-            print("start clicked")
             game.main(difficulty)
         if highscore_button.draw():
             scores_screen.main()
-            print("high score clicked")
         if quit_button.draw():
             running = False
-            print("quit clicked")
             pygame.quit()
             os.startfile(os.path.join("assets", "Tyeffect4k.mp4"))
             time.sleep(5.8)

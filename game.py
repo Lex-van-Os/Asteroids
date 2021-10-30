@@ -143,14 +143,10 @@ def draw(rocket, score, hp, difficulty):
                 and 400 + highscore_length > mouse[1] > 400
             ):
                 highscore_button.set_alpha(50)  # Makes the highscore button darker
-                # print("highscore")
-                # So we know it works
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         scores_screen.main()
-                        print("highscore pressed")
-                        # So we know it works
 
             else:
                 highscore_button.set_alpha(
@@ -163,14 +159,11 @@ def draw(rocket, score, hp, difficulty):
                 and 300 + retry_length > mouse[1] > 300
             ):
                 retry_button.set_alpha(50)  # Makes the retry button darker
-                # print("retry")
-                # So we know it works
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    # print("retry pressed")
-                    # So we know it works
 
                     asteroid_manager.asteroids_count = 0
                     asteroids.clear()
+                    rocket.reset_position()
                     # Resets asteroids
                     playerRocket.set_alpha(1000)
                     main(difficulty)
@@ -187,12 +180,12 @@ def draw(rocket, score, hp, difficulty):
                 and 500 + close_length > mouse[1] > 500
             ):
                 close_button.set_alpha(50)  # Makes the close button darker
-                # print("close")
-                # So we know it works
                 if event.type == pygame.MOUSEBUTTONDOWN:
 
+                    asteroid_manager.asteroids_count = 0
+                    asteroids.clear()
+                    rocket.reset_position()
                     home_screen.main()
-                    print("closed pressed")
 
             else:
                 close_button.set_alpha(
@@ -319,6 +312,8 @@ def main(difficulty):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+                asteroid_manager.asteroids_count = 0
+                asteroids.clear()
 
             # Shooting
             if event.type == pygame.KEYDOWN:
