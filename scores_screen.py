@@ -79,10 +79,10 @@ def main():
             # positioning score text
             SCORE_FONT = pygame.font.SysFont("commicsans", 80)
             score_text = SCORE_FONT.render(
-                "Your New Score: " + str(data), 1, (255, 255, 255)
+                "Your current highScore: " + str(data), 1, (255, 255, 255)
             )
             # display score text
-            window.blit(score_text, (width - score_text.get_width() - 350, 300))
+            window.blit(score_text, (width - score_text.get_width() - 290, 300))
 
         # set buttons
         if retry_button.draw():
