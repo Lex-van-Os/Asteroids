@@ -109,12 +109,6 @@ class Button:
         return action
 
 
-# Nilesh meme image loading
-nilesh = pygame.image.load(os.path.join("assets", "nilesh.jpg"))
-nilesh = pygame.transform.scale(nilesh, (200, 150))
-nilesh_rect = nilesh.get_rect()
-nilesh_rect.center = (screen.get_width() / 6, nilesh_rect.height / 0.3)
-
 # Doge meme image loading
 doge = pygame.image.load(os.path.join("assets", "dogedexstrong-1.png"))
 doge = pygame.transform.scale(doge, (200, 160))
@@ -163,8 +157,6 @@ qulianLink = Button(
 )
 # Create Background sound
 pygame.mixer.init()
-# pygame.mixer.music.load(os.path.join("assets", "masterchief.mp3"))
-# pygame.mixer.music.play()
 
 
 def main():
@@ -176,10 +168,9 @@ def main():
 
     while running:
 
-        # Background, titel, nilesh, doge, gordon putting them in the screen...
+        # Background, titel, doge, gordon putting them in the screen...
         screen.blit(background, (0, 0))
         screen.blit(titel, titel_rect)
-        screen.blit(nilesh, nilesh_rect)
         screen.blit(doge, doge_rect)
         screen.blit(gordon, gordon_rect)
 

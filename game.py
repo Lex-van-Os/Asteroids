@@ -30,10 +30,7 @@ shoot = pygame.mixer.Sound(f".\\" + os.path.join("assets", "Gun+Silencer.mp3"))
 explosion_sound = pygame.mixer.Sound(
     f".\\" + os.path.join("assets", "explosion_sound.wav")
 )
-idiot_sandwich = pygame.mixer.Sound("assets/Idiot_Sandwich.mp3")
 shoot = pygame.mixer.Sound(os.path.join("assets", "Gun+Silencer.mp3"))
-
-# shoot = pygame.mixer.Sound(os.path.join('assets', 'hanghang69.mp3'))
 
 pygame.display.set_caption("Asteroids")
 win = pygame.display.set_mode((width, height))
@@ -124,7 +121,6 @@ def draw(rocket, score, hp, difficulty):
         win.blit(highscore_button, (width / 2 - highscore_width / 2, 400))
         win.blit(retry_button, (width / 2 - retry_width / 2, 300))
         win.blit(close_button, (width / 2 - close_width / 2, 500))
-        # idiot_sandwich.play()
 
         # interactive buttons
         win.blit(score_text, (width / 2 - 75, 200))
@@ -296,7 +292,6 @@ def main(difficulty):
                         # Score plus 1
                         score += 1
                         # Add a explosion effect and sound effect
-                        explosion_sound.play()
 
         # Movement
         keys = pygame.key.get_pressed()
@@ -320,7 +315,6 @@ def main(difficulty):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     if hp >= 1:
-                        shoot.play()
                         bullets.append(Bullet())
 
         # Astroids spawning

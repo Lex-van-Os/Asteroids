@@ -1,11 +1,12 @@
 import math
 import pygame
+import os
 
 width, height = 1280, 720
 win = pygame.display.set_mode((width,height))
 
 # Rocket image
-playerRocket = pygame.image.load('assets/spaceship_yellow.png')
+playerRocket = pygame.image.load(os.path.join("assets", "spaceship_red.png"))
 playerRocket = pygame.transform.scale(playerRocket, (40,70))
 
 SPEED = 4
